@@ -1,19 +1,38 @@
-[gd_scene load_steps=4 format=3 uid="uid://bqi6lnbra2330"]
+[gd_scene load_steps=5 format=3 uid="uid://bqi6lnbra2330"]
 
 [ext_resource type="Script" path="res://Files/Scripts/Enemy/Enemy.cs" id="1_tqpfh"]
 [ext_resource type="Texture2D" uid="uid://coeto0padtv2i" path="res://Files/Assets/Enemys/Enemy1.png" id="1_wi7m6"]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_xhcuc"]
+radius = 12.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_32jwf"]
 radius = 5.0
 
-[node name="Enemy" type="CharacterBody2D"]
-collision_layer = 0
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("HitboxNode", "sprite") groups=["enemy"]]
+collision_layer = 8
+collision_mask = 9
+motion_mode = 1
 script = ExtResource("1_tqpfh")
+HitboxNode = NodePath("Hitbox")
+sprite = NodePath("Sprite2D")
+texture = ExtResource("1_wi7m6")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_xhcuc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_wi7m6")
 offset = Vector2(0, -4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+light_mask = 9
+visibility_layer = 9
 position = Vector2(0, -5)
 shape = SubResource("CircleShape2D_32jwf")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)

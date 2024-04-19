@@ -3,7 +3,8 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-    [Export(PropertyHint.Range,"0,200,0.5")] public int Speed { get; private set; } = 5;
+    [Export(PropertyHint.Range,"0,200,0.5")] public int Speed { get; private set; } = 125;
+    [Export(PropertyHint.Range,"0,200,0.5")] public int AccelerationSmoothing { get; private set; } = 25;
     public override void _Ready()
     {
         
@@ -13,7 +14,10 @@ public partial class Player : CharacterBody2D
     {
         var movementVector = GetMovementVector();
         var direction = movementVector.Normalized();
-        Velocity = direction * Speed;
+        var targetVelocity = direction * Speed;
+
+        Velocity = Velocity.Lerp(targetVelocity, 1 -  (float)Mathf.Exp(-delta * AccelerationSmoothing));
+
         MoveAndSlide();
     }
 
