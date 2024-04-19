@@ -7,6 +7,8 @@ public partial class SwordAbilityController : Node
 {
 	[Export] public PackedScene SwordAbility { get; private set; }
 	[Export] public int Range { get; private set; } = 150;
+
+	[Export] public int Damage { get; set; } = 1;
 	
 	public override void _Ready()
 	{
@@ -28,9 +30,11 @@ public partial class SwordAbilityController : Node
 		if (player == null)
 			return;
 
-		var swordAbilityInstance = SwordAbility.Instantiate() as Node2D;
+		var swordAbilityInstance = SwordAbility.Instantiate() as SwordAbility;
 
 		player.GetParent().AddChild(swordAbilityInstance);
+
+		swordAbilityInstance.HitboxComponent.Damage = Damage;
 
 		swordAbilityInstance.GlobalPosition = mousePosition;
 		swordAbilityInstance.GlobalPosition += Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau)) * 4;

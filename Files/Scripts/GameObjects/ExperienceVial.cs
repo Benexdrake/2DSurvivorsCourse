@@ -11,13 +11,13 @@ public partial class ExperienceVial : Node2D
 
     private void HandleAreaEntered(Area2D area)
     {
-        var player = area.GetParent() as Player;
-		if(player == null)
-			return;
-
-		// Bewegung Richtung Player
-
-		//Wenn this == player position dann Delete
+        GameEvents.EmitExperienceVialCollected(1);
 		QueueFree();
     }
+
+    private void HandleExperienceVialCollected(int obj)
+    {
+        throw new NotImplementedException();
+    }
+
 }

@@ -46,7 +46,8 @@ public partial class EnemyManager : Node
 			var spawnPosition = player.GlobalPosition + (randomDirection * SpawnRadius);
 
 			var enemy = Enemy.Instantiate() as Node2D;
-			GetParent().AddChild(enemy);
+
+			GetParent().GetParent().AddChild(enemy);
 			enemy.GlobalPosition = spawnPosition;
 		}
     }

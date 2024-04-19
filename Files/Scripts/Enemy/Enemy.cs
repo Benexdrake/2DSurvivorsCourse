@@ -10,27 +10,14 @@ public partial class Enemy : CharacterBody2D
 	[Export] public Sprite2D sprite { get; private set; }
 	[Export] public Texture2D texture { get; private set; }
 
-
-    public override void _Ready()
-    {
-		HitboxNode.AreaEntered += HandleHitboxEntered;
-		sprite.Texture = texture;
-    }
-
-
+	[Export] public HealthComponent HealthComponent { get; set; }
 
     public override void _Process(double delta)
 	{
 		Velocity = GetDirectionToPlayer() * Speed;
 		MoveAndSlide();
 	}
-    private void HandleHitboxEntered(Area2D area)
-    {
-		LifePoints--;
 
-		if(LifePoints <= 0)
-			QueueFree();
-    }
 
 	private Vector2 GetDirectionToPlayer()
 	{

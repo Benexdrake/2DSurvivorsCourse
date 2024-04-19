@@ -1,6 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://c83jg54lsqnfg"]
+[gd_scene load_steps=8 format=3 uid="uid://c83jg54lsqnfg"]
 
+[ext_resource type="Script" path="res://Files/Scripts/Abilities/Sword/SwordAbility.cs" id="1_jp246"]
 [ext_resource type="Texture2D" uid="uid://dd7rguk31djp6" path="res://Files/Assets/Abilities/Sword.png" id="1_u2fae"]
+[ext_resource type="PackedScene" uid="uid://dw24ix61rujsk" path="res://Files/Scenes/Components/hitbox_component.tscn" id="2_lvfm1"]
 
 [sub_resource type="Animation" id="Animation_444tj"]
 length = 0.001
@@ -31,7 +33,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("Area2D/CollisionShape2D:rotation")
+tracks/2/path = NodePath("HitboxComponent/CollisionShape2D:rotation")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -43,7 +45,7 @@ tracks/2/keys = {
 
 [sub_resource type="Animation" id="Animation_8ioie"]
 resource_name = "swing"
-length = 0.75
+length = 0.3
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -52,7 +54,7 @@ tracks/0/path = NodePath("Sprite2D:rotation")
 tracks/0/interp = 2
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.35, 0.75),
+"times": PackedFloat32Array(0, 0.3, 0.75),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
 "values": [0.0, 6.28319, 12.5664]
@@ -76,7 +78,7 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.75),
+"times": PackedFloat32Array(0.3),
 "transitions": PackedFloat32Array(1),
 "values": [{
 "args": [],
@@ -86,14 +88,14 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("Area2D/CollisionShape2D:rotation")
+tracks/3/path = NodePath("HitboxComponent/CollisionShape2D:rotation")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75),
+"times": PackedFloat32Array(0, 0.025, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.523599, 0.746128, 1.39626, 2.3719, 3.52557, 4.6897, 5.84685, 0.523599, 1.39626, 2.3719, 3.52557, 4.53786, 5.39307, 6.15054, 6.63923, 0.523599]
+"values": [0.523599, 0.746128, 1.39626, 2.3719, 3.52557, 4.6897, 5.84685, 6.80678, 1.39626, 2.3719, 3.52557, 4.53786, 5.39307, 6.15054, 6.63923, 0.523599]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fwfvi"]
@@ -102,10 +104,11 @@ _data = {
 "swing": SubResource("Animation_8ioie")
 }
 
-[sub_resource type="SegmentShape2D" id="SegmentShape2D_yyxlr"]
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_07xu8"]
 b = Vector2(-4.23328, -7.52591)
 
 [node name="SwordAbility" type="Node2D"]
+script = ExtResource("1_jp246")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -117,10 +120,9 @@ autoplay = "swing"
 texture = ExtResource("1_u2fae")
 offset = Vector2(0, -4)
 
-[node name="Area2D" type="Area2D" parent="."]
-collision_layer = 4
-collision_mask = 0
+[node name="HitboxComponent" parent="." instance=ExtResource("2_lvfm1")]
+Damage = 5
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
 scale = Vector2(2.5, 2.5)
-shape = SubResource("SegmentShape2D_yyxlr")
+shape = SubResource("SegmentShape2D_07xu8")
