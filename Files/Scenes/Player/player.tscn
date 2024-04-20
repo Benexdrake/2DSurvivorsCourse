@@ -1,9 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://befcdhn6k04a5"]
+[gd_scene load_steps=10 format=3 uid="uid://befcdhn6k04a5"]
 
 [ext_resource type="Script" path="res://Files/Scripts/Player/Player.cs" id="1_lh0e7"]
 [ext_resource type="Texture2D" uid="uid://dl558h2w3u8pk" path="res://Files/Characters/Player/player.png" id="1_s5hvd"]
 [ext_resource type="PackedScene" uid="uid://c2nl0p887q26k" path="res://Files/Scenes/Abilities/Sword/sword_ability_controller.tscn" id="2_8nn6v"]
 [ext_resource type="PackedScene" uid="uid://5tnb3musw5uu" path="res://Files/Scenes/Components/health_component.tscn" id="2_aalus"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jbxpq"]
+bg_color = Color(0.247059, 0.14902, 0.192157, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_elp7v"]
+bg_color = Color(0.262745, 0.882353, 0.701961, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.247059, 0.14902, 0.192157, 1)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_2sjrh"]
 radius = 32.0
@@ -30,7 +41,21 @@ MaxHealth = 10
 wait_time = 0.5
 one_shot = true
 
+[node name="HealthBar" type="ProgressBar" parent="."]
+custom_minimum_size = Vector2(32, 6)
+offset_left = -16.0
+offset_top = 3.0
+offset_right = 16.0
+offset_bottom = 9.0
+pivot_offset = Vector2(16, 3)
+theme_override_styles/background = SubResource("StyleBoxFlat_jbxpq")
+theme_override_styles/fill = SubResource("StyleBoxFlat_elp7v")
+max_value = 10.0
+value = 5.0
+show_percentage = false
+
 [node name="PickupArea" type="Area2D" parent="."]
+visible = false
 position = Vector2(0, -6)
 collision_layer = 16
 collision_mask = 0
@@ -43,10 +68,12 @@ texture = ExtResource("1_s5hvd")
 offset = Vector2(0, -8)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2(0, -6)
 shape = SubResource("CircleShape2D_kvryu")
 
 [node name="CollisionArea2D" type="Area2D" parent="."]
+visible = false
 collision_layer = 0
 collision_mask = 8
 

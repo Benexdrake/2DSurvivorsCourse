@@ -30,4 +30,7 @@ public class GameConstants
 
     // Entities
     public const string PLAYER = "player";
+
+    // Scenes
+    public const string MAIN_SCENE = "res://Files/Scenes/Levels/Level1/main.tscn";
 }

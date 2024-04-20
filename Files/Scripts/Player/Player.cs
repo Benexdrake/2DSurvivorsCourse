@@ -6,6 +6,8 @@ public partial class Player : CharacterBody2D
     [Export(PropertyHint.Range,"0,200,0.5")] public int Speed { get; private set; } = 125;
     [Export(PropertyHint.Range,"0,200,0.5")] public int AccelerationSmoothing { get; private set; } = 50;
     private HealthComponent _healthComponent;
+
+    private ProgressBar _healthBar;
     private Timer _damageIntervalTimer;
     private int _numberCollidingBodies = 0;
 
@@ -15,10 +17,14 @@ public partial class Player : CharacterBody2D
         _collisionArea = GetNode<Area2D>("CollisionArea2D");
         _damageIntervalTimer = GetNode<Timer>("DamageIntervalTimer");
         _healthComponent = GetNode<HealthComponent>("HealthComponent");
+        _healthBar = GetNode<ProgressBar>("HealthBar");
 
         _collisionArea.BodyEntered += OnCollisionAreaEntered;
         _collisionArea.BodyExited += OnCollisionAreaExited;
         _damageIntervalTimer.Timeout += () => CheckDealDamage();
+        _healthComponent.HealthChanged += OnHealthChanged;
+
+        UpdateHealthDisplay();
     }
 
     public override void _PhysicsProcess(double delta)
@@ -52,6 +58,18 @@ public partial class Player : CharacterBody2D
         _healthComponent.Damage(1);
         _damageIntervalTimer.Start();
         GD.Print(_healthComponent.CurrentHealth);
+    }
+
+    private void OnHealthChanged()
+    {
+        UpdateHealthDisplay();
+        GD.Print(_healthBar.Value);
+    }
+
+    private void UpdateHealthDisplay()
+    {
+        _healthBar.MaxValue = _healthComponent.MaxHealth;
+        _healthBar.Value = _healthComponent.CurrentHealth;
     }
 
     private Vector2 GetMovementVector()
