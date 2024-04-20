@@ -10,12 +10,11 @@ public partial class UpgradeManager : Node
     [Export] public ExperienceManager ExperienceManager { get; private set; }
     [Export] public PackedScene UpgradeScreenScene { get; private set; }
 
-    private List<AbilityUpgrade> _currentUpgrade = new();
+    private List<AbilityUpgrade> _currentUpgrades = new();
 
     public override void _Ready()
     {
         ExperienceManager.LevelUp += HandlerLevelUp;
-        _currentUpgrade.Add(new AbilityUpgrade(){Id="1", Name="Test", Description="This is a Test for the Ability"});
     }
 
     private void HandlerLevelUp(int level)
@@ -27,15 +26,36 @@ public partial class UpgradeManager : Node
         var upgradeScreenInstantiate = UpgradeScreenScene.Instantiate() as UpgradeScreen;
         AddChild(upgradeScreenInstantiate);
 
-        List<AbilityUpgrade> upgradeList = new();
-        upgradeList.Add(choosenUpgrade);
+        List<AbilityUpgrade> upgradeList = new()
+        {
+            choosenUpgrade
+        };
 
         upgradeScreenInstantiate.SetAbilityUpgrade(upgradeList);
+        upgradeScreenInstantiate.UpgradeSelected += HandleUpgradeSelected;
     }
+
+    private void HandleUpgradeSelected(AbilityUpgrade upgrade)
+    {
+        ApplyUpgrade(upgrade);
+    }
+
 
     private void ApplyUpgrade(AbilityUpgrade upgrade)
     {
+        var cu = _currentUpgrades.FirstOrDefault(x => x.Id.Equals(upgrade.Id));
 
+        if (cu == null)
+        {   
+            upgrade.Quantity = 1;
+            _currentUpgrades.Add(upgrade);
+        }
+        else
+        {
+            cu.Quantity++;
+        }
+
+        GameEvents.EmitAbilityUpgradeAdded(upgrade, _currentUpgrades);
     }
 
 }

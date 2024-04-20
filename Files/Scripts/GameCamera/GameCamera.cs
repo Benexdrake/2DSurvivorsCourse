@@ -20,7 +20,7 @@ public partial class GameCamera : Camera2D
 
 	private void AquireTarget()
 	{
-		var playerNode = GetTree().GetNodesInGroup("player").FirstOrDefault() as Node2D;
+		var playerNode = GetTree().GetNodesInGroup(GameConstants.PLAYER).FirstOrDefault() as Node2D;
 		if(playerNode == null)
 			return;
 		Offset = playerNode.GlobalPosition;

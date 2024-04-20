@@ -14,14 +14,19 @@ public partial class Enemy : CharacterBody2D
 
     public override void _Process(double delta)
 	{
-		Velocity = GetDirectionToPlayer() * Speed;
-		MoveAndSlide();
+		
 	}
 
+    public override void _PhysicsProcess(double delta)
+    {
+        Velocity = GetDirectionToPlayer() * Speed;
+		MoveAndSlide();
+    }
 
-	private Vector2 GetDirectionToPlayer()
+
+    private Vector2 GetDirectionToPlayer()
 	{
-		var player = GetTree().GetFirstNodeInGroup("player") as Node2D;
+		var player = GetTree().GetFirstNodeInGroup(GameConstants.PLAYER) as Node2D;
 
 		if (player == null)
 			return Vector2.Zero;

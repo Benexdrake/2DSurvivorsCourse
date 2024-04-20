@@ -17,16 +17,8 @@ public partial class EnemyManager : Node
 		Timer.Timeout += HandleTimer;
 	}
 
-    public override void _Process(double delta)
-    {
-        
-    }
-
     private void HandleTimer()
     {
-		// GD.Print("Timer Count:" + timerCount);
-		// GD.Print("Max Spawn:" + maxSpawn);
-
 		timerCount++;
 
 		if (timerCount == spawnUp)
@@ -37,7 +29,7 @@ public partial class EnemyManager : Node
 
 		for (int i = 0; i < maxSpawn; i++)
 		{
-			var player = GetTree().GetFirstNodeInGroup("player") as Node2D;
+			var player = GetTree().GetFirstNodeInGroup(GameConstants.PLAYER) as Node2D;
 
 			if (player == null)
 				return;
@@ -45,9 +37,12 @@ public partial class EnemyManager : Node
 			var randomDirection = Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau));
 			var spawnPosition = player.GlobalPosition + (randomDirection * SpawnRadius);
 
-			var enemy = Enemy.Instantiate() as Node2D;
+			var enemy = Enemy.Instantiate() as Enemy;
 
-			GetParent().GetParent().AddChild(enemy);
+			var entitiesLayer = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_ENTITIES_LAYER);
+
+			entitiesLayer.AddChild(enemy);
+
 			enemy.GlobalPosition = spawnPosition;
 		}
     }
