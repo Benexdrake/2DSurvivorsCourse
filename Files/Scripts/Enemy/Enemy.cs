@@ -12,14 +12,27 @@ public partial class Enemy : CharacterBody2D
 
 	[Export] public HealthComponent HealthComponent { get; set; }
 
-    public override void _Process(double delta)
-	{
-		
-	}
+	private Sprite2D _sprite2D;
+
+    public override void _Ready()
+    {
+		_sprite2D = GetNode<Sprite2D>("Sprite2D");
+    }
 
     public override void _PhysicsProcess(double delta)
     {
         Velocity = GetDirectionToPlayer() * Speed;
+
+		if(Velocity.X > 0)
+			_sprite2D.FlipH = true;
+		else
+			_sprite2D.FlipH = false;
+
+		if(Velocity.Y > 0)
+			_sprite2D.FlipV = false;
+		else
+			_sprite2D.FlipV = true;
+
 		MoveAndSlide();
     }
 

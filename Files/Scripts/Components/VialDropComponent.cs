@@ -3,7 +3,7 @@ using System;
 
 public partial class VialDropComponent : Node
 {
-    [Export(PropertyHint.Range,"0,1,0.01")] private float _dropPercent = 1f;
+    [Export(PropertyHint.Range,"0,1,0.01")] private float _dropPercent = .5f;
     [Export] public PackedScene VialScene { get; private set; }
     [Export] private HealthComponent _healthComponent;
 

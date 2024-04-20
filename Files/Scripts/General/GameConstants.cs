@@ -2,6 +2,7 @@ public class GameConstants
 {
     // Animation
     public const string ANIM_MOVE = "walk";
+    public const string ANIM_DEATH = "death";
     // public const string ANIM_IDLE = "Idle";
     // public const string ANIM_MOVE = "Move";
     // public const string ANIM_DASH = "Dash";

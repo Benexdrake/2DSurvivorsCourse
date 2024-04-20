@@ -3,7 +3,7 @@ using System;
 
 public partial class ExperienceManager : Node
 {
-	public int CurrentExperience { get; set; } = 4;
+	public int CurrentExperience { get; set; } = 0;
 	public int CurrentLevel { get; set; } = 1;
 	public int TargetExperience { get; set; } = 5;
   [Export] private int _targetExperienceGrowth = 5;
