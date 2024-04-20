@@ -9,7 +9,6 @@ public partial class SwordAbilityController : Node
 	[Export] public PackedScene SwordAbility { get; private set; }
 	[Export] public int Range { get; private set; } = 150;
 
-	[Export] public int Damage { get; set; } = 1;
 	[Export] public Timer Timer { get; set; }
 
 	
@@ -29,37 +28,36 @@ public partial class SwordAbilityController : Node
     }
 
 
-    public override void _PhysicsProcess(double delta)
-    {
-        if(Input.IsActionJustPressed(GameConstants.INPUT_LEFT_CLICK))
-		{
-			if(Timer.IsStopped())
-			{
-				Attack();
-				Timer.Start();
-			}
-		}
-    }
+    // public override void _PhysicsProcess(double delta)
+    // {
+    //     if(Input.IsActionJustPressed(GameConstants.INPUT_LEFT_CLICK))
+	// 	{
+	// 		if(Timer.IsStopped())
+	// 		{
+	// 			Attack();
+	// 			Timer.Start();
+	// 		}
+	// 	}
+    // }
 
-    private void Attack()
-	{
-		GD.Print(Timer.WaitTime);
-		var mousePosition = GetViewport().GetCamera2D().GetLocalMousePosition();
+    // private void Attack()
+	// {
+	// 	var mousePosition = GetViewport().GetCamera2D().GetLocalMousePosition();
 
-		var player = GetTree().GetFirstNodeInGroup(GameConstants.PLAYER) as Node2D;
+	// 	var player = GetTree().GetFirstNodeInGroup(GameConstants.PLAYER) as Node2D;
 
-		if (player == null)
-			return;
+	// 	if (player == null)
+	// 		return;
 
-		var swordAbilityInstance = SwordAbility.Instantiate() as SwordAbility;
+	// 	var swordAbilityInstance = SwordAbility.Instantiate() as SwordAbility;
 
-		var foregroundLayer = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_FOREGROUND_LAYER);
+	// 	var foregroundLayer = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_FOREGROUND_LAYER);
 
-		foregroundLayer.AddChild(swordAbilityInstance);
+	// 	foregroundLayer.AddChild(swordAbilityInstance);
 
-		swordAbilityInstance.HitboxComponent.Damage = Damage;
+	// 	swordAbilityInstance.HitboxComponent.Damage = GameConstants.SKILL_SWORD_DMG;
 
-		swordAbilityInstance.GlobalPosition = mousePosition;
-		swordAbilityInstance.GlobalPosition += Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau)) * 4;
-	}
+	// 	swordAbilityInstance.GlobalPosition = mousePosition;
+	// 	swordAbilityInstance.GlobalPosition += Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau)) * 4;
+	// }
 }

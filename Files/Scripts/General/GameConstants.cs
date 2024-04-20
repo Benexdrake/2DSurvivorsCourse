@@ -1,6 +1,7 @@
 public class GameConstants
 {
     // Animation
+    public const string ANIM_MOVE = "walk";
     // public const string ANIM_IDLE = "Idle";
     // public const string ANIM_MOVE = "Move";
     // public const string ANIM_DASH = "Dash";
@@ -27,10 +28,24 @@ public class GameConstants
 
     // Abilitys
     public const string ABILITY_SWORD_RATE = "sword_rate";
+    public const string ABILITY_AXE = "axe";
 
     // Entities
-    public const string PLAYER = "player";
+    public const string PLAYER = "Player";
 
     // Scenes
     public const string MAIN_SCENE = "res://Files/Scenes/Levels/Level1/main.tscn";
+
+    // Label
+    public const string DEFEAT_TITLE_LABEL = "Defeat";
+    public const string DEFEAT_DESCRIPTION_LABEL = "You Lost!";
+    public const string WIN_TITLE_LABEL = "Winner";
+    public const string WIN_DESCRIPTION_LABEL = "You Won!";
+
+    // Gameplay
+    public const float DIFFICULTY_INTERVAL = 5;
+    public const int SKILL_SWORD_DMG = 1;
+    public const int SKILL_AXE_DMG = 1;
+    public const int SKILL_AXE_RADIUS = 100;
+
 }

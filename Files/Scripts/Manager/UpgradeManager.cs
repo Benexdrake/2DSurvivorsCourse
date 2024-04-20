@@ -2,6 +2,7 @@ using Godot;
 using Godot.Collections;
 using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 
 public partial class UpgradeManager : Node
@@ -19,17 +20,10 @@ public partial class UpgradeManager : Node
 
     private void HandlerLevelUp(int level)
     {
-        var choosenUpgrade = UpgradePool.FirstOrDefault();
-        if (choosenUpgrade == null)
-            return;
+       var upgradeList = PickUpgrades();
 
         var upgradeScreenInstantiate = UpgradeScreenScene.Instantiate() as UpgradeScreen;
         AddChild(upgradeScreenInstantiate);
-
-        List<AbilityUpgrade> upgradeList = new()
-        {
-            choosenUpgrade
-        };
 
         upgradeScreenInstantiate.SetAbilityUpgrade(upgradeList);
         upgradeScreenInstantiate.UpgradeSelected += HandleUpgradeSelected;
@@ -43,19 +37,39 @@ public partial class UpgradeManager : Node
 
     private void ApplyUpgrade(AbilityUpgrade upgrade)
     {
+        GD.Print(upgrade.Name);
         var cu = _currentUpgrades.FirstOrDefault(x => x.Id.Equals(upgrade.Id));
+
+        var sortedUpgrades = _currentUpgrades;
 
         if (cu == null)
         {   
             upgrade.Quantity = 1;
-            _currentUpgrades.Add(upgrade);
+            _currentUpgrades.Add(upgrade);   
         }
         else
         {
-            cu.Quantity++;
+            upgrade.Quantity++;
         }
+        GameEvents.EmitAbilityUpgradeAdded(upgrade, sortedUpgrades);
+    }
 
-        GameEvents.EmitAbilityUpgradeAdded(upgrade, _currentUpgrades);
+    private List<AbilityUpgrade> PickUpgrades()
+    {
+        var filteredUpgrades = UpgradePool.ToList().Where(x => x.MaxQuantity > x.Quantity).ToList();
+        var newUpgrades = new List<AbilityUpgrade>();
+
+        for (int i = 0; i < 3; i++)
+        {
+            Random rand = new();
+            var shuffeledList = filteredUpgrades.OrderBy(x => rand.Next()).ToList();
+            var upgrade = shuffeledList.FirstOrDefault();
+            if (upgrade == null)
+                break;
+            newUpgrades.Add(upgrade);
+            filteredUpgrades.Remove(upgrade);
+        }
+        return newUpgrades;
     }
 
 }

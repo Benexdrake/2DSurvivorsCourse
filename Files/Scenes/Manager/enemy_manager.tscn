@@ -9,4 +9,5 @@ Enemy = ExtResource("2_wdi5t")
 Timer = NodePath("Timer")
 
 [node name="Timer" type="Timer" parent="."]
+one_shot = true
 autostart = true
