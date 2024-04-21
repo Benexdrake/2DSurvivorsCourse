@@ -64,7 +64,7 @@ public partial class EnemyManager : Node
 			maxSpawn++;
 		}
 
-		var enemy = Enemy.Instantiate() as Enemy;
+		var enemy = Enemy.Instantiate() as Node2D;
 		var entitiesLayer = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_ENTITIES_LAYER);
 		entitiesLayer.AddChild(enemy);
 		enemy.GlobalPosition = GetSpawnPosition();

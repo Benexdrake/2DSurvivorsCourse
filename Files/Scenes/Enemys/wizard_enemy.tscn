@@ -1,0 +1,47 @@
+[gd_scene load_steps=10 format=3 uid="uid://uvd4eyk2cbfj"]
+
+[ext_resource type="PackedScene" uid="uid://5tnb3musw5uu" path="res://Files/Scenes/Components/health_component.tscn" id="1_5ks3o"]
+[ext_resource type="Texture2D" uid="uid://dweck3lhu17u7" path="res://Files/Assets/Enemys/Enemy6.png" id="1_f4grl"]
+[ext_resource type="Script" path="res://Files/Scripts/Enemies/WizardEnemy.cs" id="1_wbmlk"]
+[ext_resource type="PackedScene" uid="uid://btspc8vrlrbmd" path="res://Files/Scenes/Components/death_component.tscn" id="2_wts4f"]
+[ext_resource type="PackedScene" uid="uid://d4av27utniru1" path="res://Files/Scenes/Components/velocity_component.tscn" id="2_x84wn"]
+[ext_resource type="PackedScene" uid="uid://608s4f23ibkw" path="res://Files/Scenes/Components/hurtbox_component.tscn" id="4_0r7p5"]
+[ext_resource type="PackedScene" uid="uid://cwjo42nh0exks" path="res://Files/Scenes/Components/vial_drop_component.tscn" id="4_imvdg"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_s4u1g"]
+radius = 8.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bgwko"]
+radius = 4.0
+
+[node name="WizardEnemy" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 8
+collision_mask = 9
+script = ExtResource("1_wbmlk")
+MaxHealth = 10
+texture2D = ExtResource("1_f4grl")
+
+[node name="HealthComponent" parent="." instance=ExtResource("1_5ks3o")]
+MaxHealth = 2
+
+[node name="VialDropComponent" parent="." instance=ExtResource("4_imvdg")]
+
+[node name="VelocityComponent" parent="." instance=ExtResource("2_x84wn")]
+
+[node name="DeathComponent" parent="." instance=ExtResource("2_wts4f")]
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("4_0r7p5")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -7)
+shape = SubResource("CircleShape2D_s4u1g")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("CircleShape2D_bgwko")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+position = Vector2(0, -8)
+texture = ExtResource("1_f4grl")

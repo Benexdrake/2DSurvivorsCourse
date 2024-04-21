@@ -3,8 +3,8 @@ using System;
 
 public partial class DeathComponent : Node2D
 {
-    [Export] private HealthComponent _healthComponent;
-    [Export] private Sprite2D _sprite;
+    private HealthComponent _healthComponent;
+    private Sprite2D _sprite;
     private AnimationPlayer _animationPlayer;
     private GpuParticles2D _gpuParticle2D;
 
@@ -13,14 +13,19 @@ public partial class DeathComponent : Node2D
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _gpuParticle2D = GetNode<GpuParticles2D>("GPUParticles2D");
 
-        _gpuParticle2D.Texture = _sprite.Texture;
+        _healthComponent = Owner.GetNode<HealthComponent>("HealthComponent");
 
         _healthComponent.Died += HandleDied;
     }
 
     private void HandleDied()
     {
+        _sprite = Owner.GetNode<Sprite2D>("Visuals/Sprite2D");
+        _gpuParticle2D.Texture = _sprite.Texture;
+
         var owner = Owner as Node2D;
+        if(Owner == null)
+            return;
         var spawnPosition = owner.GlobalPosition;
         var entities = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_ENTITIES_LAYER);
         GetParent().RemoveChild(this);

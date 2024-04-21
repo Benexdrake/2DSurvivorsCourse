@@ -3,10 +3,11 @@ using System;
 
 public partial class HurtboxComponent : Area2D
 {
-    [Export] public HealthComponent HealthComponent { get; private set; }
+    private HealthComponent _healthComponent;
 
     public override void _Ready()
     {
+        _healthComponent = Owner.GetNode<HealthComponent>("HealthComponent");
         AreaEntered += HandleAreaEntered;
     }
 
@@ -17,7 +18,9 @@ public partial class HurtboxComponent : Area2D
 
         var hitboxComponent = area as HitboxComponent;
 
-        HealthComponent.Damage(hitboxComponent.Damage);
+        _healthComponent.Damage(hitboxComponent.Damage);
+        GD.Print(_healthComponent.MaxHealth);
+        GD.Print(_healthComponent.CurrentHealth);
     }
 
 }

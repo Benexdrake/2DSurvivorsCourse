@@ -3,8 +3,9 @@ using System;
 
 public partial class HealthComponent : Node
 {
-    [Export] public int MaxHealth { get; private set; } = 2;
-    public int CurrentHealth { get; private set; }
+    [Export] public int MaxHealth { get; set; }
+    private int _getDamage;
+    public int CurrentHealth { get; set; }
 
     [Signal] public delegate void DiedEventHandler();
     [Signal] public delegate void HealthChangedEventHandler();
@@ -16,7 +17,9 @@ public partial class HealthComponent : Node
 
     public void Damage(int damage)
     {
-        CurrentHealth = Mathf.Clamp(CurrentHealth - damage,0,MaxHealth);
+        _getDamage += damage;
+        CurrentHealth = MaxHealth- _getDamage;
+        //CurrentHealth = Mathf.Clamp(CurrentHealth - damage,0,MaxHealth);
         EmitSignal(SignalName.HealthChanged);
         Callable.From(CheckDeath).CallDeferred();
     }
