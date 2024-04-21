@@ -19,8 +19,6 @@ public partial class HurtboxComponent : Area2D
         var hitboxComponent = area as HitboxComponent;
 
         _healthComponent.Damage(hitboxComponent.Damage);
-        GD.Print(_healthComponent.MaxHealth);
-        GD.Print(_healthComponent.CurrentHealth);
     }
 
 }

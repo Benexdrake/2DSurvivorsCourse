@@ -2,7 +2,8 @@ using Godot;
 
 public partial class EnemyManager : Node
 {
-	[Export] public PackedScene Enemy { get; private set; }
+	[Export] private PackedScene _basicEnemy;
+	[Export] private PackedScene _wizardEnemy;
 	[Export] public Timer Timer { get; private set; }
 	[Export] public int SpawnRadius { get; private set; } = 350;
 	[Export] public ArenaTimeManager ArenaTimeManager { get; private set; }
@@ -13,10 +14,17 @@ public partial class EnemyManager : Node
 	private int spawnUp = 10;
 	private int maxSpawn = 1;
 
+	private WeightedEnemyTable _enemyTable;
+
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
 	{
 		_baseSpawnTime = Timer.WaitTime;
+		_enemyTable = new();
+
+		var e1 = _basicEnemy.Instantiate() as Enemy;
+		_enemyTable.AddEnemy(e1);
+
 		Timer.Timeout += HandleTimer;
 		ArenaTimeManager.ArenaDifficultyIncreased += HandleArenaDifficultyIncreased;
 	}
@@ -26,6 +34,12 @@ public partial class EnemyManager : Node
         var timeOff = .1 / 12 * arenaDifficulty;
 		timeOff = Mathf.Min(timeOff, .7);
 		Timer.WaitTime = _baseSpawnTime - timeOff;
+
+		if(arenaDifficulty == 1)
+		{
+			var e2 = _wizardEnemy.Instantiate() as Enemy;
+			_enemyTable.AddEnemy(e2);
+		}
     }
 
 	private Vector2 GetSpawnPosition()
@@ -64,9 +78,25 @@ public partial class EnemyManager : Node
 			maxSpawn++;
 		}
 
-		var enemy = Enemy.Instantiate() as Node2D;
+		var enemyName = _enemyTable.PickEnemy();
+
+        switch (enemyName)
+		{
+			case "BasicEnemy":
+        		var e1 = _basicEnemy.Instantiate() as BasicEnemy;
+				AddEntity(e1);
+				break;
+			case "WizardEnemy":
+        		var e2 = _wizardEnemy.Instantiate() as WizardEnemy;
+				AddEntity(e2);
+				break;
+		}
+    }
+
+	private void AddEntity(Enemy enemy)
+	{
 		var entitiesLayer = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_ENTITIES_LAYER);
 		entitiesLayer.AddChild(enemy);
 		enemy.GlobalPosition = GetSpawnPosition();
-    }
+	}
 }

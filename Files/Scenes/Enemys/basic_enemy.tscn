@@ -1,6 +1,6 @@
 [gd_scene load_steps=13 format=3 uid="uid://bqi6lnbra2330"]
 
-[ext_resource type="Script" path="res://Files/Scripts/Enemies/TestEnemy.cs" id="1_h4h8t"]
+[ext_resource type="Script" path="res://Files/Scripts/Enemies/BasicEnemy.cs" id="1_iactk"]
 [ext_resource type="Texture2D" uid="uid://coeto0padtv2i" path="res://Files/Assets/Enemys/Enemy1.png" id="2_rc5xd"]
 [ext_resource type="PackedScene" uid="uid://5tnb3musw5uu" path="res://Files/Scenes/Components/health_component.tscn" id="3_044r0"]
 [ext_resource type="PackedScene" uid="uid://cwjo42nh0exks" path="res://Files/Scenes/Components/vial_drop_component.tscn" id="4_gjlet"]
@@ -80,11 +80,12 @@ radius = 5.0
 collision_layer = 8
 collision_mask = 9
 motion_mode = 1
-script = ExtResource("1_h4h8t")
+script = ExtResource("1_iactk")
 MaxHealth = 1
 MaxSpeed = 30
-Acceleration = 2.0
+Acceleration = 3.0
 texture2D = ExtResource("2_rc5xd")
+Weight = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -107,6 +108,7 @@ _dropPercent = 0.35
 [node name="Sprite2D" type="Sprite2D" parent="Visuals"]
 texture = ExtResource("2_rc5xd")
 offset = Vector2(0, -4)
+flip_h = true
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("6_qg0ud")]
 visible = false

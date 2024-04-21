@@ -9,7 +9,6 @@ public partial class VelocityComponent : Node
     
     private Vector2 _velocity = Vector2.Zero;
     private Sprite2D _sprite2D;
-
     private bool _flip;
 
     public void Ready()
@@ -20,7 +19,7 @@ public partial class VelocityComponent : Node
         MaxSpeed = owner.MaxSpeed;
         Acceleration = owner.Acceleration;
 
-        _flip = _sprite2D.FlipH;
+        _flip = !_sprite2D.FlipH;
     }
 
     public void AccelerateToPlayer()
@@ -41,6 +40,11 @@ public partial class VelocityComponent : Node
     {
         var desiredVelocity = direction * MaxSpeed;
         _velocity = _velocity.Lerp(desiredVelocity, 1- Mathf.Exp(-Acceleration * (float)GetProcessDeltaTime()));
+    }
+
+    public void Decelerate()
+    {
+        AccelerateInDirection(Vector2.Zero);
     }
 
     public void Move(CharacterBody2D characterBody2D)
