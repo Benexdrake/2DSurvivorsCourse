@@ -3,6 +3,10 @@ public class GameConstants
     // Animation
     public const string ANIM_MOVE = "walk";
     public const string ANIM_DEATH = "death";
+    public const string ANIM_CARD_IN = "in";
+    public const string ANIM_CARD_HOVER = "hover";
+    public const string ANIM_CARD_SELECTED = "selected";
+    public const string ANIM_CARD_DISCARD = "discard";
     // public const string ANIM_IDLE = "Idle";
     // public const string ANIM_MOVE = "Move";
     // public const string ANIM_DASH = "Dash";
@@ -26,10 +30,13 @@ public class GameConstants
     // Groups
     public const string GROUP_ENTITIES_LAYER = "entities_layer";
     public const string GROUP_FOREGROUND_LAYER = "foreground_layer";
+    public const string GROUP_UPGRADE_CARD = "upgrade_card";
 
     // Abilitys
     public const string ABILITY_SWORD_RATE = "sword_rate";
+    public const string ABILITY_SWORD_DMG = "sword_damage";
     public const string ABILITY_AXE = "axe";
+    public const string ABILITY_AXE_DMG = "axe_damage";
 
     // Entities
     public const string PLAYER = "Player";

@@ -7,4 +7,5 @@ public partial class AbilityUpgrade : Resource
     [Export(PropertyHint.MultilineText)] public string Description { get; set; }
     [Export] public int MaxQuantity { get; set; }
     public int Quantity { get; set; }
+    public int Weight { get; set; }
 }

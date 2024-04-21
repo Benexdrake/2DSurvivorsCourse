@@ -14,13 +14,16 @@ public partial class UpgradeScreen : CanvasLayer
     }
     public void SetAbilityUpgrade(List<AbilityUpgrade> upgrades)
     {
+        float delay = 0;
         foreach(var upgrade in upgrades)
         {
             if (UpgradeCardScene.Instantiate() is not AbilityUpgradeCard instance)
                 return;
             _cardContainer.AddChild(instance);
             instance.SetAbilityUpgrade(upgrade);
+            instance.PlayIn(delay);
             instance.Selected += () => HandleSelectedAbility(upgrade);
+            delay += .2f;
         }
     }
 

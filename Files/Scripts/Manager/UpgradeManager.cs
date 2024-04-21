@@ -1,20 +1,27 @@
 using Godot;
-using Godot.Collections;
 using System;
 using System.Collections.Generic;
-using System.Dynamic;
 using System.Linq;
 
 public partial class UpgradeManager : Node
 {
-    [Export] public AbilityUpgrade[] UpgradePool { get; private set; }
+    private List<AbilityUpgrade> _upgradePool = new();
     [Export] public ExperienceManager ExperienceManager { get; private set; }
     [Export] public PackedScene UpgradeScreenScene { get; private set; }
+    
+
+    [Export] private Resource _upgradeAxe;
+    [Export] private Resource _upgradeAxeDamage;
+    [Export] private Resource _upgradeSwordRate;
+    [Export] private Resource _upgradeSwordDamage;
 
     private List<AbilityUpgrade> _currentUpgrades = new();
 
     public override void _Ready()
     {
+        _upgradePool.Add(_upgradeAxe as AbilityUpgrade);
+        _upgradePool.Add(_upgradeSwordRate as AbilityUpgrade);
+        _upgradePool.Add(_upgradeSwordDamage as AbilityUpgrade);
         ExperienceManager.LevelUp += HandlerLevelUp;
     }
 
@@ -37,7 +44,6 @@ public partial class UpgradeManager : Node
 
     private void ApplyUpgrade(AbilityUpgrade upgrade)
     {
-        GD.Print(upgrade.Name);
         var cu = _currentUpgrades.FirstOrDefault(x => x.Id.Equals(upgrade.Id));
 
         var sortedUpgrades = _currentUpgrades;
@@ -56,7 +62,8 @@ public partial class UpgradeManager : Node
 
     private List<AbilityUpgrade> PickUpgrades()
     {
-        var filteredUpgrades = UpgradePool.ToList().Where(x => x.MaxQuantity > x.Quantity).ToList();
+        ProofUpgrades();
+        var filteredUpgrades = _upgradePool.Where(x => x.MaxQuantity > x.Quantity).ToList();
         var newUpgrades = new List<AbilityUpgrade>();
 
         for (int i = 0; i < 3; i++)
@@ -70,6 +77,19 @@ public partial class UpgradeManager : Node
             filteredUpgrades.Remove(upgrade);
         }
         return newUpgrades;
+    }
+
+    private void ProofUpgrades()
+    {
+        var axeUpgrade = _currentUpgrades.FirstOrDefault(x => x.Id.Equals((_upgradeAxe as Ability).Id));
+        if (axeUpgrade != null)
+        {
+            var axeDamage = _currentUpgrades.FirstOrDefault(y => y.Id.Equals((_upgradeAxeDamage as Ability).Id));
+            if(axeDamage == null)
+            {
+                _upgradePool.Add(_upgradeAxeDamage as Ability);
+            }
+        }
     }
 
 }

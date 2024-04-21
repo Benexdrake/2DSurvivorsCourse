@@ -11,53 +11,39 @@ public partial class SwordAbilityController : Node
 
 	[Export] public Timer Timer { get; set; }
 
+	private int _baseDmg = GameConstants.SKILL_SWORD_DMG;
+
 	
 	public override void _Ready()
 	{
-		GameEvents.AbilityUpgradeAdded += HandeAbilityUpgradeAdded;
+		GameEvents.AbilityUpgradeAdded += HandelAbilityUpgradeAdded;
 	}
 
-    private void HandeAbilityUpgradeAdded(AbilityUpgrade upgrade, List<AbilityUpgrade> upgrades)
+	public void Attack()
+	{
+		var mousePosition = GetViewport().GetCamera2D().GetLocalMousePosition();
+
+		var swordAbilityInstance = SwordAbility.Instantiate() as SwordAbility;
+
+		var foregroundLayer = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_FOREGROUND_LAYER);
+
+		foregroundLayer.AddChild(swordAbilityInstance);
+
+		swordAbilityInstance.HitboxComponent.Damage = _baseDmg;
+
+		swordAbilityInstance.GlobalPosition = mousePosition;
+		swordAbilityInstance.GlobalPosition += Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau)) * 4;
+		Timer.Start();
+	}
+
+    private void HandelAbilityUpgradeAdded(AbilityUpgrade upgrade, List<AbilityUpgrade> upgrades)
     {
-		if (!upgrade.Id.Equals(GameConstants.ABILITY_SWORD_RATE))
-			return;
-
-		var swordRateAbility = upgrades.FirstOrDefault(x => x.Id.Equals(GameConstants.ABILITY_SWORD_RATE));
-
-		Timer.WaitTime *= 1- (swordRateAbility.Quantity * .1);
+		if (upgrade.Id.Equals(GameConstants.ABILITY_SWORD_RATE))
+		{
+			var swordRateAbility = upgrades.FirstOrDefault(x => x.Id.Equals(GameConstants.ABILITY_SWORD_RATE));
+			Timer.WaitTime *= 1- (swordRateAbility.Quantity * .1);
+		}
+		else if(upgrade.Id.Equals(GameConstants.ABILITY_SWORD_DMG))
+            _baseDmg++;
     }
-
-
-    // public override void _PhysicsProcess(double delta)
-    // {
-    //     if(Input.IsActionJustPressed(GameConstants.INPUT_LEFT_CLICK))
-	// 	{
-	// 		if(Timer.IsStopped())
-	// 		{
-	// 			Attack();
-	// 			Timer.Start();
-	// 		}
-	// 	}
-    // }
-
-    // private void Attack()
-	// {
-	// 	var mousePosition = GetViewport().GetCamera2D().GetLocalMousePosition();
-
-	// 	var player = GetTree().GetFirstNodeInGroup(GameConstants.PLAYER) as Node2D;
-
-	// 	if (player == null)
-	// 		return;
-
-	// 	var swordAbilityInstance = SwordAbility.Instantiate() as SwordAbility;
-
-	// 	var foregroundLayer = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_FOREGROUND_LAYER);
-
-	// 	foregroundLayer.AddChild(swordAbilityInstance);
-
-	// 	swordAbilityInstance.HitboxComponent.Damage = GameConstants.SKILL_SWORD_DMG;
-
-	// 	swordAbilityInstance.GlobalPosition = mousePosition;
-	// 	swordAbilityInstance.GlobalPosition += Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau)) * 4;
-	// }
 }

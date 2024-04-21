@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://uvd4eyk2cbfj"]
+[gd_scene load_steps=17 format=3 uid="uid://uvd4eyk2cbfj"]
 
 [ext_resource type="PackedScene" uid="uid://5tnb3musw5uu" path="res://Files/Scenes/Components/health_component.tscn" id="1_5ks3o"]
 [ext_resource type="Texture2D" uid="uid://dweck3lhu17u7" path="res://Files/Assets/Enemys/Enemy6.png" id="1_f4grl"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://608s4f23ibkw" path="res://Files/Scenes/Components/hurtbox_component.tscn" id="4_0r7p5"]
 [ext_resource type="PackedScene" uid="uid://cwjo42nh0exks" path="res://Files/Scenes/Components/vial_drop_component.tscn" id="4_imvdg"]
 [ext_resource type="PackedScene" uid="uid://bp03itp1jt2t8" path="res://Files/Scenes/Components/hit_flash_component.tscn" id="7_8sgx6"]
+[ext_resource type="Shader" path="res://Files/Shader/hit_flash_component.gdshader" id="7_ygcdm"]
 [ext_resource type="Material" uid="uid://xwd4yb3due8l" path="res://Files/Shader/hit_flash_component_material.tres" id="9_e3bq2"]
 
 [sub_resource type="Animation" id="Animation_3kfjf"]
@@ -90,6 +91,11 @@ _data = {
 "walk": SubResource("Animation_ri5ni")
 }
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2a6li"]
+resource_local_to_scene = true
+shader = ExtResource("7_ygcdm")
+shader_parameter/lerp_percent = 0.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4u1g"]
 radius = 8.0
 
@@ -121,6 +127,7 @@ MaxHealth = 2
 [node name="VelocityComponent" parent="." instance=ExtResource("2_x84wn")]
 
 [node name="HitFlashComponent" parent="." instance=ExtResource("7_8sgx6")]
+_flashMaterial = SubResource("ShaderMaterial_2a6li")
 
 [node name="DeathComponent" parent="." instance=ExtResource("2_wts4f")]
 

@@ -20,10 +20,11 @@ public partial class DeathComponent : Node2D
 
     private void HandleDied()
     {
-        _sprite = Owner.GetNode<Sprite2D>("Visuals/Sprite2D");
+        if (Owner is not Node2D owner)
+            return;
+        _sprite = owner.GetNode<Sprite2D>("Visuals/Sprite2D");
         _gpuParticle2D.Texture = _sprite.Texture;
 
-        var owner = Owner as Node2D;
         if(Owner == null)
             return;
         var spawnPosition = owner.GlobalPosition;

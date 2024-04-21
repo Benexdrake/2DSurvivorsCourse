@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://lgwu7r5kpd7g"]
+
+[ext_resource type="PackedScene" uid="uid://c2nl0p887q26k" path="res://Files/Scenes/Abilities/Sword/sword_ability_controller.tscn" id="1_kdcs6"]
+[ext_resource type="Script" path="res://Files/Scripts/Resources/Upgrades/Ability.cs" id="2_17lmc"]
+
+[resource]
+script = ExtResource("2_17lmc")
+AbilityControllerScene = ExtResource("1_kdcs6")
+Id = "axe_damage"
+Name = "Axe Damage"
+Description = "Increase axe attack damage by 1"
+MaxQuantity = 10

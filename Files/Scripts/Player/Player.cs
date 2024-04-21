@@ -18,6 +18,9 @@ public partial class Player : CharacterBody2D
     private Sprite2D _sprite2D;
     private int _numberCollidingBodies = 0;
 
+    private int _baseDmg = GameConstants.SKILL_SWORD_DMG;
+    
+
     private Area2D _collisionArea;
     public override void _Ready()
     {
@@ -36,8 +39,15 @@ public partial class Player : CharacterBody2D
         _damageIntervalTimer.Timeout += () => CheckDealDamage();
         _healthComponent.HealthChanged += OnHealthChanged;
         GameEvents.AbilityUpgradeAdded += OnAbilityUpgradeAdded;
-
         UpdateHealthDisplay();
+    }
+    private void OnAbilityUpgradeAdded(AbilityUpgrade upgrade, List<AbilityUpgrade> list)
+    {
+        if(upgrade is not Ability)
+            return;
+        var ability = upgrade as Ability;
+        _abilities.AddChild(ability.AbilityControllerScene.Instantiate());
+
     }
 
     public override void _PhysicsProcess(double delta)
@@ -52,8 +62,7 @@ public partial class Player : CharacterBody2D
 		{
 			if(_swordAbilityControllerTimer.IsStopped())
 			{
-				Attack();
-				_swordAbilityControllerTimer.Start();
+				_swordAbilityController.Attack();
 			}
 		}
 
@@ -69,31 +78,7 @@ public partial class Player : CharacterBody2D
         else
             _animationPlayer.Play("RESET");
 
-        
         MoveAndSlide();
-
-        // if(movementVector.X != 0 || movementVector.Y != 0)
-        // {
-        //     _animationPlayer.Play(GameConstants.ANIM_MOVE);
-
-        //     if(movementVector.X > 0)
-        
-        //         _sprite2D.FlipH=false;
-        //     else
-        //         _sprite2D.FlipH = true;
-        // }
-        // else
-        //     _animationPlayer.Play("Reset");
-
-    }
-
-    private void OnAbilityUpgradeAdded(AbilityUpgrade upgrade, List<AbilityUpgrade> list)
-    {
-        if(upgrade is not Ability)
-            return;
-        var ability = upgrade as Ability;
-        _abilities.AddChild(ability.AbilityControllerScene.Instantiate());
-
     }
 
     private void OnCollisionAreaEntered(Node2D body)
@@ -125,22 +110,6 @@ public partial class Player : CharacterBody2D
 
         return new Vector2(xMovement, yMovement);
     }
-
-        private void Attack()
-	{
-		var mousePosition = GetViewport().GetCamera2D().GetLocalMousePosition();
-
-		var swordAbilityInstance = _swordAbility.Instantiate() as SwordAbility;
-
-		var foregroundLayer = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_FOREGROUND_LAYER);
-
-		foregroundLayer.AddChild(swordAbilityInstance);
-
-		swordAbilityInstance.HitboxComponent.Damage = GameConstants.SKILL_SWORD_DMG;
-
-		swordAbilityInstance.GlobalPosition = mousePosition;
-		swordAbilityInstance.GlobalPosition += Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau)) * 4;
-	}
 
     private void CheckDealDamage()
     {
