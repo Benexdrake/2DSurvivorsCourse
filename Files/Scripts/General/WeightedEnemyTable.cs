@@ -23,7 +23,6 @@ public class WeightedEnemyTable
             accumulatedWeight += enemy.Weight / 10;
             if (randomValue <= accumulatedWeight)
             {
-                GD.Print(enemy.Name);
                 return enemy.Name;
             }
         }

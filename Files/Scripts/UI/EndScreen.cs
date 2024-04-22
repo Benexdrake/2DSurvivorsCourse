@@ -61,7 +61,8 @@ public partial class EndScreen : CanvasLayer
     private void HandleRestartButton()
     {
         GetTree().Paused = false;
-        GetTree().ChangeSceneToFile(GameConstants.MAIN_SCENE);
+        GetTree().ReloadCurrentScene();
+        //GetTree().ChangeSceneToFile(GameConstants.MAIN_SCENE);
     }
 
 }
