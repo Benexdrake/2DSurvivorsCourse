@@ -13,7 +13,6 @@ public partial class VelocityComponent : Node
 
     public override void _Ready()
     {
-        GD.Print(Owner.Name);
         _sprite2D = Owner.GetNode<Sprite2D>("Visuals/Sprite2D");
 
         _flip = !_sprite2D.FlipH;

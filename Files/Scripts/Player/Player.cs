@@ -102,6 +102,7 @@ public partial class Player : CharacterBody2D
     {
         GameEvents.EmitPlayerDamaged();
         UpdateHealthDisplay();
+        GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D").Play();
     }
 
     private void UpdateHealthDisplay()

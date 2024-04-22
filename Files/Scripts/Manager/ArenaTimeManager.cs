@@ -30,6 +30,7 @@ public partial class ArenaTimeManager : Node
         var victoryScreenInstance = EndScreenScene.Instantiate() as EndScreen;
 		AddChild(victoryScreenInstance);
 		victoryScreenInstance.SetWin();
+		victoryScreenInstance.PlayJingle(false);
     }
 
 

@@ -9,6 +9,7 @@ public class GameConstants
     public const string ANIM_CARD_HOVER = "hover";
     public const string ANIM_CARD_SELECTED = "selected";
     public const string ANIM_CARD_DISCARD = "discard";
+    
     // public const string ANIM_IDLE = "Idle";
     // public const string ANIM_MOVE = "Move";
     // public const string ANIM_DASH = "Dash";

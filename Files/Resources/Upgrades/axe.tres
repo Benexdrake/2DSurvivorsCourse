@@ -9,4 +9,4 @@ AbilityControllerScene = ExtResource("1_pcplk")
 Id = "axe"
 Name = "Axe"
 Description = "Periodically sends out a spinning axe."
-MaxQuantity = 1
+MaxQuantity = 2

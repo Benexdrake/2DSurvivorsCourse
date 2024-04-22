@@ -5,6 +5,7 @@ public partial class HurtboxComponent : Area2D
 {
     private HealthComponent _healthComponent;
     [Export] private PackedScene _floatingText;
+    [Signal] public delegate void HitEventHandler();
 
     public override void _Ready()
     {
@@ -25,6 +26,7 @@ public partial class HurtboxComponent : Area2D
         GetTree().GetFirstNodeInGroup(GameConstants.GROUP_FOREGROUND_LAYER).AddChild(floatingText);
         floatingText.GlobalPosition = GlobalPosition + Vector2.Up * 16;
         floatingText.Start(hitboxComponent.Damage.ToString());
+        EmitSignal(SignalName.Hit);
     }
 
 }

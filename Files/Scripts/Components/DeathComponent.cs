@@ -33,6 +33,6 @@ public partial class DeathComponent : Node2D
         entities.AddChild(this);
         GlobalPosition = spawnPosition;
         _animationPlayer.Play(GameConstants.ANIM_DEATH);
+        GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D").Play();
     }
-
 }

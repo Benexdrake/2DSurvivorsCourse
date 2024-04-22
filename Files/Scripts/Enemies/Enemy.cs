@@ -21,12 +21,13 @@ public abstract partial class Enemy : CharacterBody2D
   public override void _Ready()
   {
     _healthComponent = GetNode<HealthComponent>("HealthComponent");
+
     _healthComponent.MaxHealth = MaxHealth;
     _velocityComponent = GetNode<VelocityComponent>("VelocityComponent");
+  
     _sprite2D = GetNode<Sprite2D>("Visuals/Sprite2D");
     _sprite2D.Texture = texture2D;
   }
-
   public override void _PhysicsProcess(double delta)
   {
     if(isMoving)
@@ -34,10 +35,5 @@ public abstract partial class Enemy : CharacterBody2D
     else
       _velocityComponent.Decelerate();
 	  _velocityComponent.Move(this);
-  }
-
-  public void SetIsMoving(bool isMoving)
-  {
-
   }
 }

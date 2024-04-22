@@ -29,6 +29,8 @@ public partial class ExperienceVial : Node2D
         tween.Chain();
         
         tween.TweenCallback(Callable.From(Collect));
+        
+        GetNode<AudioStreamPlayer2D>("AudioStreamPlayer2D").Play();
     }
 
     private void TweenCollect(float percent, Vector2 startPosition)

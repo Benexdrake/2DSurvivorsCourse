@@ -36,12 +36,21 @@ public partial class EndScreen : CanvasLayer
     {
         _titleLabel.Text = GameConstants.DEFEAT_TITLE_LABEL;
         _descriptionLabel.Text = GameConstants.DEFEAT_DESCRIPTION_LABEL; 
+        PlayJingle(true);
     }
 
     public void SetWin()
     {
         _titleLabel.Text = GameConstants.WIN_TITLE_LABEL;
         _descriptionLabel.Text = GameConstants.WIN_DESCRIPTION_LABEL; 
+    }
+
+    public void PlayJingle(bool defeat)
+    {
+        if(defeat)
+            GetNode<AudioStreamPlayer>("DefeatStreamPlayer").Play();
+        else
+            GetNode<AudioStreamPlayer>("VictoryStreamPlayer").Play();
     }
 
     private void HandleQuitButton()

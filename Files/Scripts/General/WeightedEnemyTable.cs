@@ -9,21 +9,25 @@ public class WeightedEnemyTable
     public void AddEnemy(Enemy enemy)
     {
         enemys.Add(enemy);
-        _weightSum = enemy.Weight;
+        _weightSum += enemy.Weight;
     }
 
     public string PickEnemy()
     {
-        var rand = new Random();
-        var choosenWeight = rand.Next(1, _weightSum + 1);
-        
-        foreach(var enemy in enemys)
+        double totalWeight = _weightSum / 10;
+        double randomValue = new Random().NextDouble() * totalWeight;
+
+        double accumulatedWeight = 0;
+        foreach (var enemy in enemys)
         {
-            if(enemy.Weight == choosenWeight)
+            accumulatedWeight += enemy.Weight / 10;
+            if (randomValue <= accumulatedWeight)
             {
+                GD.Print(enemy.Name);
                 return enemy.Name;
             }
         }
+        GD.Print(enemys[0].Name);
         return enemys[0].Name;
     }
 }

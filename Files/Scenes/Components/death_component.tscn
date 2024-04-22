@@ -1,7 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://btspc8vrlrbmd"]
+[gd_scene load_steps=17 format=3 uid="uid://btspc8vrlrbmd"]
 
 [ext_resource type="Script" path="res://Files/Scripts/Components/DeathComponent.cs" id="1_0o517"]
 [ext_resource type="Texture2D" uid="uid://coeto0padtv2i" path="res://Files/Assets/Enemys/Enemy1.png" id="1_07acv"]
+[ext_resource type="AudioStream" uid="uid://msmwr802hm7o" path="res://Files/Assets/SFX/footstep_carpet_000.ogg" id="3_l0lnc"]
+[ext_resource type="AudioStream" uid="uid://wsjryab1eb7p" path="res://Files/Assets/SFX/footstep_carpet_001.ogg" id="4_4ikyb"]
+[ext_resource type="AudioStream" uid="uid://daew0b73tiqh" path="res://Files/Assets/SFX/footstep_carpet_002.ogg" id="5_vs534"]
+[ext_resource type="AudioStream" uid="uid://cugi01tgbaruq" path="res://Files/Assets/SFX/footstep_carpet_003.ogg" id="6_byirl"]
+[ext_resource type="AudioStream" uid="uid://dt2nucq0i71nk" path="res://Files/Assets/SFX/footstep_carpet_004.ogg" id="7_6wgun"]
 
 [sub_resource type="Curve" id="Curve_fkl1e"]
 _data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.594444, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -81,6 +86,19 @@ _data = {
 "death": SubResource("Animation_67x7r")
 }
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_dp2un"]
+streams_count = 5
+stream_0/stream = ExtResource("3_l0lnc")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("4_4ikyb")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("5_vs534")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("6_byirl")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("7_6wgun")
+stream_4/weight = 1.0
+
 [node name="DeathComponent" type="Node2D"]
 script = ExtResource("1_0o517")
 
@@ -98,3 +116,6 @@ interpolate = false
 libraries = {
 "": SubResource("AnimationLibrary_4fdnw")
 }
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_dp2un")

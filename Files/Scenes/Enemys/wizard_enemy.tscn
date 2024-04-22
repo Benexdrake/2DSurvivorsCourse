@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://uvd4eyk2cbfj"]
+[gd_scene load_steps=23 format=3 uid="uid://uvd4eyk2cbfj"]
 
 [ext_resource type="PackedScene" uid="uid://5tnb3musw5uu" path="res://Files/Scenes/Components/health_component.tscn" id="1_5ks3o"]
 [ext_resource type="Texture2D" uid="uid://dweck3lhu17u7" path="res://Files/Assets/Enemys/Enemy6.png" id="1_f4grl"]
@@ -10,6 +10,11 @@
 [ext_resource type="PackedScene" uid="uid://bp03itp1jt2t8" path="res://Files/Scenes/Components/hit_flash_component.tscn" id="7_8sgx6"]
 [ext_resource type="Shader" path="res://Files/Shader/hit_flash_component.gdshader" id="7_ygcdm"]
 [ext_resource type="Material" uid="uid://xwd4yb3due8l" path="res://Files/Shader/hit_flash_component_material.tres" id="9_e3bq2"]
+[ext_resource type="AudioStream" uid="uid://msmwr802hm7o" path="res://Files/Assets/SFX/footstep_carpet_000.ogg" id="11_5dlj0"]
+[ext_resource type="AudioStream" uid="uid://wsjryab1eb7p" path="res://Files/Assets/SFX/footstep_carpet_001.ogg" id="12_difr5"]
+[ext_resource type="AudioStream" uid="uid://daew0b73tiqh" path="res://Files/Assets/SFX/footstep_carpet_002.ogg" id="13_tb875"]
+[ext_resource type="AudioStream" uid="uid://cugi01tgbaruq" path="res://Files/Assets/SFX/footstep_carpet_003.ogg" id="14_v4tki"]
+[ext_resource type="AudioStream" uid="uid://dt2nucq0i71nk" path="res://Files/Assets/SFX/footstep_carpet_004.ogg" id="15_7atpo"]
 
 [sub_resource type="Animation" id="Animation_3kfjf"]
 length = 0.001
@@ -96,6 +101,19 @@ resource_local_to_scene = true
 shader = ExtResource("7_ygcdm")
 shader_parameter/lerp_percent = 0.0
 
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_l3a2j"]
+streams_count = 5
+stream_0/stream = ExtResource("11_5dlj0")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("12_difr5")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("13_tb875")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("14_v4tki")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("15_7atpo")
+stream_4/weight = 1.0
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_s4u1g"]
 radius = 8.0
 
@@ -108,10 +126,9 @@ collision_layer = 8
 collision_mask = 9
 script = ExtResource("1_wbmlk")
 MaxHealth = 2
-MaxSpeed = 60
 Acceleration = 20.0
 texture2D = ExtResource("1_f4grl")
-Weight = 10
+Weight = 90
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -130,6 +147,9 @@ MaxHealth = 2
 _flashMaterial = SubResource("ShaderMaterial_2a6li")
 
 [node name="DeathComponent" parent="." instance=ExtResource("2_wts4f")]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_l3a2j")
 
 [node name="HurtboxComponent" parent="." instance=ExtResource("4_0r7p5")]
 
