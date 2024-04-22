@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Collections.Generic;
 
 public partial class Main : Node
 {
@@ -17,5 +18,4 @@ public partial class Main : Node
         AddChild(endScreenInstance);
         endScreenInstance.SetDefeat();
     }
-
 }

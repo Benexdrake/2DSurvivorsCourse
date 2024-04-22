@@ -17,7 +17,12 @@ public partial class ExperienceManager : Node
       GameEvents.ExperienceVialCollection += HandleExperienceVialCollection;
   }
 
-  private void HandleExperienceVialCollection(int number)
+    public override void _ExitTree()
+    {
+        GameEvents.ExperienceVialCollection -= HandleExperienceVialCollection;
+    }
+
+    private void HandleExperienceVialCollection(int number)
   {
 		IncrementExperience(number);
   }

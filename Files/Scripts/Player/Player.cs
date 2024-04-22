@@ -18,7 +18,6 @@ public partial class Player : CharacterBody2D
     private Sprite2D _sprite2D;
     private VelocityComponent _velocityComponent;
     private int _numberCollidingBodies = 0;
-
     private int _baseDmg = GameConstants.SKILL_SWORD_DMG;
     
 
@@ -34,20 +33,19 @@ public partial class Player : CharacterBody2D
         _sprite2D = GetNode<Sprite2D>("Visuals/Sprite2D");
         _velocityComponent = GetNode<VelocityComponent>("VelocityComponent");
         GD.Print(_velocityComponent.Name);
-
         _swordAbilityControllerTimer = _swordAbilityController.Timer;
-
         _collisionArea.BodyEntered += OnCollisionAreaEntered;
         _collisionArea.BodyExited += OnCollisionAreaExited;
         _damageIntervalTimer.Timeout += () => CheckDealDamage();
         _healthComponent.HealthChanged += OnHealthChanged;
         GameEvents.AbilityUpgradeAdded += OnAbilityUpgradeAdded;
-        
         UpdateHealthDisplay();
     }
 
-
-
+    public override void _ExitTree()
+    {
+        GameEvents.AbilityUpgradeAdded -= OnAbilityUpgradeAdded;
+    }
 
     private void OnAbilityUpgradeAdded(AbilityUpgrade upgrade, List<AbilityUpgrade> list)
     {
@@ -56,7 +54,7 @@ public partial class Player : CharacterBody2D
             return;
         GD.Print(Speed);
         var ability = upgrade as Ability;
-        if(ability.Id.Equals("player_speed"))
+        if(ability.Id.Equals(GameConstants.ABILITY_PLAYER_SPEED))
         {
             Speed += 25;
             GD.Print(Speed);
@@ -71,7 +69,7 @@ public partial class Player : CharacterBody2D
         var direction = movementVector.Normalized();
 
         if(movementVector.X != 0 || movementVector.Y != 0)
-            _animationPlayer.Play("walk");
+            _animationPlayer.Play(GameConstants.ANIM_WALK);
         else
             _animationPlayer.Play("RESET");
         _velocityComponent.AccelerateInDirection(direction);

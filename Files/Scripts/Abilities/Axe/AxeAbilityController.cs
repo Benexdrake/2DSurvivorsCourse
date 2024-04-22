@@ -17,6 +17,11 @@ public partial class AxeAbilityController : Node
         GameEvents.AbilityUpgradeAdded += HandeAbilityUpgradeAdded;
     }
 
+    public override void _ExitTree()
+    {
+        GameEvents.AbilityUpgradeAdded -= HandeAbilityUpgradeAdded;
+    }
+
     private void HandleTimeout()
     {
         var player = GetTree().GetFirstNodeInGroup(GameConstants.PLAYER) as Player;

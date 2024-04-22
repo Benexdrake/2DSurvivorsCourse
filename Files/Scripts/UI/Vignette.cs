@@ -8,6 +8,11 @@ public partial class Vignette : CanvasLayer
         GameEvents.PlayerDamaged += HandlePlayerDamaged;
     }
 
+    public override void _ExitTree()
+    {
+       GameEvents.PlayerDamaged -= HandlePlayerDamaged;
+    }
+
     private void HandlePlayerDamaged()
     {
         GetNode<AnimationPlayer>("AnimationPlayer").Play(GameConstants.ANIM_HIT);

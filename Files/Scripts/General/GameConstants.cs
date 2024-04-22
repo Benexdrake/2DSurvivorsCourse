@@ -1,7 +1,7 @@
 public class GameConstants
 {
     // Animation
-    public const string ANIM_MOVE = "walk";
+    public const string ANIM_WALK = "walk";
     public const string ANIM_DEATH = "death";
     public const string ANIM_IN = "in";
     public const string ANIM_OUT = "out";
@@ -36,6 +36,7 @@ public class GameConstants
     public const string GROUP_UPGRADE_CARD = "upgrade_card";
 
     // Abilitys
+    public const string ABILITY_PLAYER_SPEED = "player_speed";
     public const string ABILITY_SWORD_RATE = "sword_rate";
     public const string ABILITY_SWORD_DMG = "sword_damage";
     public const string ABILITY_AXE = "axe";
