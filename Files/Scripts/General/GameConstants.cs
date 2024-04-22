@@ -3,7 +3,9 @@ public class GameConstants
     // Animation
     public const string ANIM_MOVE = "walk";
     public const string ANIM_DEATH = "death";
-    public const string ANIM_CARD_IN = "in";
+    public const string ANIM_IN = "in";
+    public const string ANIM_OUT = "out";
+    public const string ANIM_HIT = "hit";
     public const string ANIM_CARD_HOVER = "hover";
     public const string ANIM_CARD_SELECTED = "selected";
     public const string ANIM_CARD_DISCARD = "discard";

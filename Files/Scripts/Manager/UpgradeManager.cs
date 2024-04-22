@@ -14,6 +14,7 @@ public partial class UpgradeManager : Node
     [Export] private Resource _upgradeAxeDamage;
     [Export] private Resource _upgradeSwordRate;
     [Export] private Resource _upgradeSwordDamage;
+    [Export] private Resource _upgradePlayerSpeed;
 
     private List<AbilityUpgrade> _currentUpgrades = new();
 
@@ -22,6 +23,7 @@ public partial class UpgradeManager : Node
         _upgradePool.Add(_upgradeAxe as AbilityUpgrade);
         _upgradePool.Add(_upgradeSwordRate as AbilityUpgrade);
         _upgradePool.Add(_upgradeSwordDamage as AbilityUpgrade);
+        _upgradePool.Add(_upgradePlayerSpeed as AbilityUpgrade);
         ExperienceManager.LevelUp += HandlerLevelUp;
     }
 

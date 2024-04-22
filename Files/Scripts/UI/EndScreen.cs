@@ -7,6 +7,8 @@ public partial class EndScreen : CanvasLayer
     private Label _descriptionLabel;
     private Button _restartButton;
     private Button _quitButton;
+
+    private PanelContainer _panelContainer;
     public override void _Ready()
     {
         _restartButton = GetNode<Button>("%RestartButton");
@@ -14,6 +16,15 @@ public partial class EndScreen : CanvasLayer
 
         _titleLabel = GetNode<Label>("%TitleLabel");
         _descriptionLabel = GetNode<Label>("%DescriptionLabel");
+
+        _panelContainer = GetNode<PanelContainer>("%PanelContainer");
+
+        _panelContainer.PivotOffset = _panelContainer.Size / 2;
+
+        var tween = CreateTween();
+        tween.TweenProperty(_panelContainer,"scale", Vector2.Zero,0);
+        tween.TweenProperty(_panelContainer,"scale", Vector2.One,.4)
+        .SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Back);
 
         GetTree().Paused = true;
 

@@ -11,13 +11,10 @@ public partial class VelocityComponent : Node
     private Sprite2D _sprite2D;
     private bool _flip;
 
-    public void Ready()
+    public override void _Ready()
     {
+        GD.Print(Owner.Name);
         _sprite2D = Owner.GetNode<Sprite2D>("Visuals/Sprite2D");
-        var owner = Owner as Enemy;
-
-        MaxSpeed = owner.MaxSpeed;
-        Acceleration = owner.Acceleration;
 
         _flip = !_sprite2D.FlipH;
     }
@@ -36,7 +33,7 @@ public partial class VelocityComponent : Node
         AccelerateInDirection(direction);
     }
 
-    private void AccelerateInDirection(Vector2 direction)
+    public void AccelerateInDirection(Vector2 direction)
     {
         var desiredVelocity = direction * MaxSpeed;
         _velocity = _velocity.Lerp(desiredVelocity, 1- Mathf.Exp(-Acceleration * (float)GetProcessDeltaTime()));
@@ -49,6 +46,19 @@ public partial class VelocityComponent : Node
 
     public void Move(CharacterBody2D characterBody2D)
     {
+        if(Owner is Enemy)
+        {
+            var owner = Owner as Enemy;
+            MaxSpeed = owner.Speed;
+            Acceleration = owner.Acceleration;
+        }
+        else if(Owner is Player)
+        {
+            var owner = Owner as Player;
+            MaxSpeed = owner.Speed;
+            Acceleration = owner.Acceleration;
+        }
+        //GD.Print(">> "+characterBody2D.Name);
         characterBody2D.Velocity = _velocity;
 
         if(_velocity.X > 0)

@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public partial class Player : CharacterBody2D
 {
-    [Export(PropertyHint.Range,"0,200,0.5")] public int Speed { get; private set; } = 125;
-    [Export(PropertyHint.Range,"0,200,0.5")] public int AccelerationSmoothing { get; private set; } = 50;
+    [Export(PropertyHint.Range,"0,200,0.5")] public int Speed { get; private set; } = 100;
+    [Export(PropertyHint.Range,"0,200,0.5")] public int Acceleration { get; private set; } = 50;
     [Export] private PackedScene _swordAbility;
     [Export] private SwordAbilityController _swordAbilityController;
     public HealthComponent _healthComponent {get; private set;}
@@ -16,6 +16,7 @@ public partial class Player : CharacterBody2D
     private Node _abilities;
     private AnimationPlayer _animationPlayer;
     private Sprite2D _sprite2D;
+    private VelocityComponent _velocityComponent;
     private int _numberCollidingBodies = 0;
 
     private int _baseDmg = GameConstants.SKILL_SWORD_DMG;
@@ -30,7 +31,9 @@ public partial class Player : CharacterBody2D
         _healthBar = GetNode<ProgressBar>("HealthBar");
         _abilities = GetNode<Node>("Abilities");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        _sprite2D = GetNode<Sprite2D>("Sprite2D");
+        _sprite2D = GetNode<Sprite2D>("Visuals/Sprite2D");
+        _velocityComponent = GetNode<VelocityComponent>("VelocityComponent");
+        GD.Print(_velocityComponent.Name);
 
         _swordAbilityControllerTimer = _swordAbilityController.Timer;
 
@@ -39,24 +42,41 @@ public partial class Player : CharacterBody2D
         _damageIntervalTimer.Timeout += () => CheckDealDamage();
         _healthComponent.HealthChanged += OnHealthChanged;
         GameEvents.AbilityUpgradeAdded += OnAbilityUpgradeAdded;
+        
         UpdateHealthDisplay();
     }
+
+
+
+
     private void OnAbilityUpgradeAdded(AbilityUpgrade upgrade, List<AbilityUpgrade> list)
     {
+        GD.Print(Speed);
         if(upgrade is not Ability)
             return;
+        GD.Print(Speed);
         var ability = upgrade as Ability;
+        if(ability.Id.Equals("player_speed"))
+        {
+            Speed += 25;
+            GD.Print(Speed);
+            return;
+        }
         _abilities.AddChild(ability.AbilityControllerScene.Instantiate());
-
     }
 
     public override void _PhysicsProcess(double delta)
     {
         var movementVector = GetMovementVector();
         var direction = movementVector.Normalized();
-        var targetVelocity = direction * Speed;
 
-        Velocity = Velocity.Lerp(targetVelocity, 1 -  (float)Mathf.Exp(-delta * AccelerationSmoothing));
+        if(movementVector.X != 0 || movementVector.Y != 0)
+            _animationPlayer.Play("walk");
+        else
+            _animationPlayer.Play("RESET");
+        _velocityComponent.AccelerateInDirection(direction);
+
+        _velocityComponent.Move(this);
 
         if(Input.IsActionJustPressed(GameConstants.INPUT_LEFT_CLICK))
 		{
@@ -65,20 +85,6 @@ public partial class Player : CharacterBody2D
 				_swordAbilityController.Attack();
 			}
 		}
-
-        if(movementVector.X != 0 || movementVector.Y != 0)
-        {
-            if(movementVector.X < 0)
-                _sprite2D.FlipH = true;
-            else if(movementVector.X > 0)
-                _sprite2D.FlipH = false;
-
-            _animationPlayer.Play(GameConstants.ANIM_MOVE);
-        }
-        else
-            _animationPlayer.Play("RESET");
-
-        MoveAndSlide();
     }
 
     private void OnCollisionAreaEntered(Node2D body)
@@ -94,6 +100,7 @@ public partial class Player : CharacterBody2D
 
     private void OnHealthChanged()
     {
+        GameEvents.EmitPlayerDamaged();
         UpdateHealthDisplay();
     }
 

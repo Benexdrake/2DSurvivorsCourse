@@ -1,0 +1,12 @@
+[gd_resource type="Resource" load_steps=3 format=3 uid="uid://ca78iifbhm3hb"]
+
+[ext_resource type="PackedScene" uid="uid://c2nl0p887q26k" path="res://Files/Scenes/Abilities/Sword/sword_ability_controller.tscn" id="1_mvb0x"]
+[ext_resource type="Script" path="res://Files/Scripts/Resources/Upgrades/Ability.cs" id="2_7dv6x"]
+
+[resource]
+script = ExtResource("2_7dv6x")
+AbilityControllerScene = ExtResource("1_mvb0x")
+Id = "player_speed"
+Name = "Player Speed"
+Description = "Increase player speed by 10%"
+MaxQuantity = 5

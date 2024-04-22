@@ -1,13 +1,83 @@
-[gd_scene load_steps=3 format=3 uid="uid://tr0bigis70ea"]
+[gd_scene load_steps=7 format=3 uid="uid://tr0bigis70ea"]
 
 [ext_resource type="Script" path="res://Files/Scripts/UI/UpgradeScreen.cs" id="1_tiupt"]
 [ext_resource type="PackedScene" uid="uid://bufdqf4ie22jn" path="res://Files/Scenes/UI/ability_upgrade_card.tscn" id="1_yejaj"]
+
+[sub_resource type="Animation" id="Animation_s75nf"]
+resource_name = "in"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_k2uqt"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_sf1jq"]
+resource_name = "out"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.15),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_f7g6n"]
+_data = {
+"RESET": SubResource("Animation_k2uqt"),
+"in": SubResource("Animation_s75nf"),
+"out": SubResource("Animation_sf1jq")
+}
 
 [node name="UpgradeScreen" type="CanvasLayer" node_paths=PackedStringArray("_cardContainer")]
 process_mode = 3
 script = ExtResource("1_tiupt")
 UpgradeCardScene = ExtResource("1_yejaj")
 _cardContainer = NodePath("MarginContainer/CardContainer")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_f7g6n")
+}
+autoplay = "in"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.607843, 0.298039, 0.639216, 0.352941)
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchors_preset = 15

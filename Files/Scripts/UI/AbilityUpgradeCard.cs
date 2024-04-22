@@ -57,7 +57,7 @@ public partial class AbilityUpgradeCard : PanelContainer
         var timer = GetTree().CreateTimer(delay);
         await ToSignal(timer,"timeout");
 
-        _animationPlayer.Play(GameConstants.ANIM_CARD_IN);
+        _animationPlayer.Play(GameConstants.ANIM_IN);
     }
 
     private void HandleGuiInput(InputEvent @event)

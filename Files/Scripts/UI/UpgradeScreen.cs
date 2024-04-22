@@ -7,9 +7,11 @@ public partial class UpgradeScreen : CanvasLayer
     [Export] private PackedScene UpgradeCardScene;
     [Export] private HBoxContainer _cardContainer;
     [Signal] public delegate void UpgradeSelectedEventHandler(AbilityUpgrade upgrade);
+    private AnimationPlayer _animationPlayer;
 
     public override void _Ready()
     {
+        _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         GetTree().Paused = true;
     }
     public void SetAbilityUpgrade(List<AbilityUpgrade> upgrades)
@@ -27,9 +29,13 @@ public partial class UpgradeScreen : CanvasLayer
         }
     }
 
-    private void HandleSelectedAbility(AbilityUpgrade upgrade)
+    private async void HandleSelectedAbility(AbilityUpgrade upgrade)
     {
         EmitSignal(SignalName.UpgradeSelected, upgrade);
+        _animationPlayer.Play(GameConstants.ANIM_OUT);
+
+        await ToSignal(_animationPlayer, "animation_finished");
+        
         GetTree().Paused = false;
         QueueFree();
     }
