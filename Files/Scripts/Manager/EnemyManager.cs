@@ -3,6 +3,7 @@ using Godot;
 public partial class EnemyManager : Node
 {
 	[Export] private PackedScene _basicEnemy;
+	[Export] private PackedScene _basicEnemy2;
 	[Export] private PackedScene _wizardEnemy;
 	[Export] public Timer Timer { get; private set; }
 	[Export] public int SpawnRadius { get; private set; } = 350;
@@ -14,7 +15,7 @@ public partial class EnemyManager : Node
 	private int spawnUp = 10;
 	private int maxSpawn = 1;
 
-	private WeightedEnemyTable _enemyTable;
+	private WeightTable _enemyTable;
 
 	// Called when the node enters the scene tree for the first time.
 	public override void _Ready()
@@ -22,8 +23,9 @@ public partial class EnemyManager : Node
 		_baseSpawnTime = Timer.WaitTime;
 		_enemyTable = new();
 
-		var e1 = _basicEnemy.Instantiate() as Enemy;
-		_enemyTable.AddEnemy(e1);
+		var enemy = _basicEnemy.Instantiate() as Enemy;
+		_enemyTable.Add(_basicEnemy, enemy.Weight);
+		enemy.QueueFree();
 
 		Timer.Timeout += HandleTimer;
 		ArenaTimeManager.ArenaDifficultyIncreased += HandleArenaDifficultyIncreased;
@@ -35,10 +37,19 @@ public partial class EnemyManager : Node
 		timeOff = Mathf.Min(timeOff, .7);
 		Timer.WaitTime = _baseSpawnTime - timeOff;
 
-		if(arenaDifficulty == 1)
+		if(arenaDifficulty == 10)
 		{
-			var e2 = _wizardEnemy.Instantiate() as Enemy;
-			_enemyTable.AddEnemy(e2);
+			GD.Print("Enemy Wizard");
+			var enemy = _wizardEnemy.Instantiate() as Enemy;
+			_enemyTable.Add(_wizardEnemy, enemy.Weight);
+			enemy.QueueFree();
+		}
+		else if(arenaDifficulty == 20)
+		{
+			GD.Print("Enemy Rat 2");
+			var enemy = _basicEnemy2.Instantiate() as Enemy;
+			_enemyTable.Add(_basicEnemy2, enemy.Weight);
+			enemy.QueueFree();
 		}
     }
 
@@ -78,17 +89,18 @@ public partial class EnemyManager : Node
 			maxSpawn++;
 		}
 
-		var enemyName = _enemyTable.PickEnemy();
-
-        switch (enemyName)
+		var enemy = _enemyTable.Pick().Instantiate();
+		
+		switch (enemy.Name)
 		{
-			case "BasicEnemy":
-        		var e1 = _basicEnemy.Instantiate() as BasicEnemy;
-				AddEntity(e1);
+			case "BasicEnemy":        		
+				AddEntity(enemy as BasicEnemy);
 				break;
 			case "WizardEnemy":
-        		var e2 = _wizardEnemy.Instantiate() as WizardEnemy;
-				AddEntity(e2);
+				AddEntity(enemy as WizardEnemy);
+				break;
+			case "BasicEnemy2":
+				AddEntity(enemy as BasicEnemy);
 				break;
 		}
     }

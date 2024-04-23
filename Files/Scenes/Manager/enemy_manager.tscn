@@ -1,12 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://cl6idevqiuvcl"]
+[gd_scene load_steps=5 format=3 uid="uid://cl6idevqiuvcl"]
 
 [ext_resource type="Script" path="res://Files/Scripts/Manager/EnemyManager.cs" id="1_jqjre"]
 [ext_resource type="PackedScene" uid="uid://bqi6lnbra2330" path="res://Files/Scenes/Enemys/basic_enemy.tscn" id="2_d83hw"]
 [ext_resource type="PackedScene" uid="uid://uvd4eyk2cbfj" path="res://Files/Scenes/Enemys/wizard_enemy.tscn" id="2_v3ete"]
+[ext_resource type="PackedScene" uid="uid://bjpepkw6q4dli" path="res://Files/Scenes/Enemys/basic_enemy2.tscn" id="3_1mr56"]
 
 [node name="EnemyManager" type="Node" node_paths=PackedStringArray("Timer")]
 script = ExtResource("1_jqjre")
 _basicEnemy = ExtResource("2_d83hw")
+_basicEnemy2 = ExtResource("3_1mr56")
 _wizardEnemy = ExtResource("2_v3ete")
 Timer = NodePath("Timer")
 

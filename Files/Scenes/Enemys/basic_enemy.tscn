@@ -110,7 +110,7 @@ script = ExtResource("1_iactk")
 MaxHealth = 1
 Acceleration = 3.0
 texture2D = ExtResource("2_rc5xd")
-Weight = 100
+Weight = 10
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

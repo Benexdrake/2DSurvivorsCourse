@@ -1,0 +1,161 @@
+[gd_scene load_steps=24 format=3 uid="uid://bjpepkw6q4dli"]
+
+[ext_resource type="Script" path="res://Files/Scripts/Enemies/BasicEnemy.cs" id="1_6k3ms"]
+[ext_resource type="Texture2D" uid="uid://cykff4od3u5t" path="res://Files/Assets/Enemys/Enemy2.png" id="2_akae4"]
+[ext_resource type="Texture2D" uid="uid://coeto0padtv2i" path="res://Files/Assets/Enemys/Enemy1.png" id="2_dmkfe"]
+[ext_resource type="PackedScene" uid="uid://5tnb3musw5uu" path="res://Files/Scenes/Components/health_component.tscn" id="3_50e4p"]
+[ext_resource type="PackedScene" uid="uid://cwjo42nh0exks" path="res://Files/Scenes/Components/vial_drop_component.tscn" id="4_5kfx5"]
+[ext_resource type="PackedScene" uid="uid://d4av27utniru1" path="res://Files/Scenes/Components/velocity_component.tscn" id="5_lsv8j"]
+[ext_resource type="PackedScene" uid="uid://bp03itp1jt2t8" path="res://Files/Scenes/Components/hit_flash_component.tscn" id="6_3ang7"]
+[ext_resource type="Shader" path="res://Files/Shader/hit_flash_component.gdshader" id="7_l43lb"]
+[ext_resource type="PackedScene" uid="uid://btspc8vrlrbmd" path="res://Files/Scenes/Components/death_component.tscn" id="8_njj0d"]
+[ext_resource type="Material" uid="uid://xwd4yb3due8l" path="res://Files/Shader/hit_flash_component_material.tres" id="9_hfqgt"]
+[ext_resource type="PackedScene" uid="uid://608s4f23ibkw" path="res://Files/Scenes/Components/hurtbox_component.tscn" id="10_um2l4"]
+[ext_resource type="AudioStream" uid="uid://msmwr802hm7o" path="res://Files/Assets/SFX/footstep_carpet_000.ogg" id="11_ci8h3"]
+[ext_resource type="AudioStream" uid="uid://wsjryab1eb7p" path="res://Files/Assets/SFX/footstep_carpet_001.ogg" id="12_o5pkx"]
+[ext_resource type="AudioStream" uid="uid://daew0b73tiqh" path="res://Files/Assets/SFX/footstep_carpet_002.ogg" id="13_bcr8k"]
+[ext_resource type="AudioStream" uid="uid://cugi01tgbaruq" path="res://Files/Assets/SFX/footstep_carpet_003.ogg" id="14_rsdjl"]
+[ext_resource type="AudioStream" uid="uid://dt2nucq0i71nk" path="res://Files/Assets/SFX/footstep_carpet_004.ogg" id="15_7m0io"]
+
+[sub_resource type="Animation" id="Animation_1merr"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_yen6b"]
+resource_name = "walk"
+length = 0.4
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/Sprite2D:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(-1, 0), Vector2(1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/Sprite2D:rotation")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.174533, -0.174533, 0.174533, -0.174533]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_0lpi4"]
+_data = {
+"RESET": SubResource("Animation_1merr"),
+"walk": SubResource("Animation_yen6b")
+}
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qknpq"]
+resource_local_to_scene = true
+shader = ExtResource("7_l43lb")
+shader_parameter/lerp_percent = 0.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jvffr"]
+radius = 12.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_32jwf"]
+radius = 5.0
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_xdyxd"]
+streams_count = 5
+stream_0/stream = ExtResource("11_ci8h3")
+stream_0/weight = 1.0
+stream_1/stream = ExtResource("12_o5pkx")
+stream_1/weight = 1.0
+stream_2/stream = ExtResource("13_bcr8k")
+stream_2/weight = 1.0
+stream_3/stream = ExtResource("14_rsdjl")
+stream_3/weight = 1.0
+stream_4/stream = ExtResource("15_7m0io")
+stream_4/weight = 1.0
+
+[node name="BasicEnemy2" type="CharacterBody2D" groups=["enemy"]]
+collision_layer = 8
+collision_mask = 9
+motion_mode = 1
+script = ExtResource("1_6k3ms")
+MaxHealth = 5
+Speed = 60
+Acceleration = 20.0
+texture2D = ExtResource("2_akae4")
+Weight = 30
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_0lpi4")
+}
+autoplay = "walk"
+
+[node name="HealthComponent" parent="." instance=ExtResource("3_50e4p")]
+MaxHealth = 1
+
+[node name="VialDropComponent" parent="." instance=ExtResource("4_5kfx5")]
+
+[node name="VelocityComponent" parent="." instance=ExtResource("5_lsv8j")]
+
+[node name="HitFlashComponent" parent="." instance=ExtResource("6_3ang7")]
+_flashMaterial = SubResource("ShaderMaterial_qknpq")
+
+[node name="DeathComponent" parent="." instance=ExtResource("8_njj0d")]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals"]
+material = ExtResource("9_hfqgt")
+texture = ExtResource("2_dmkfe")
+offset = Vector2(0, -4)
+flip_h = true
+
+[node name="HurtboxComponent" parent="." instance=ExtResource("10_um2l4")]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_jvffr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+light_mask = 9
+visibility_layer = 9
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_32jwf")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_xdyxd")
+volume_db = 24.0
+bus = &"sfx"

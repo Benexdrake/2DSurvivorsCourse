@@ -47,6 +47,8 @@ public class GameConstants
 
     // Scenes
     public const string MAIN_SCENE = "res://Files/Scenes/Levels/Level1/main.tscn";
+    public const string MAIN_MENU_SCENE = "res://Files/Scenes/UI/main_menu.tscn";
+    public const string OPTIONS_MENU_SCENE = "res://Files/Scenes/UI/options_menu.tscn";
 
     // Label
     public const string DEFEAT_TITLE_LABEL = "Defeat";

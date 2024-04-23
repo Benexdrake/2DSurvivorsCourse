@@ -32,7 +32,6 @@ public partial class Player : CharacterBody2D
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _sprite2D = GetNode<Sprite2D>("Visuals/Sprite2D");
         _velocityComponent = GetNode<VelocityComponent>("VelocityComponent");
-        GD.Print(_velocityComponent.Name);
         _swordAbilityControllerTimer = _swordAbilityController.Timer;
         _collisionArea.BodyEntered += OnCollisionAreaEntered;
         _collisionArea.BodyExited += OnCollisionAreaExited;
@@ -49,15 +48,12 @@ public partial class Player : CharacterBody2D
 
     private void OnAbilityUpgradeAdded(AbilityUpgrade upgrade, List<AbilityUpgrade> list)
     {
-        GD.Print(Speed);
         if(upgrade is not Ability)
             return;
-        GD.Print(Speed);
         var ability = upgrade as Ability;
         if(ability.Id.Equals(GameConstants.ABILITY_PLAYER_SPEED))
         {
             Speed += 25;
-            GD.Print(Speed);
             return;
         }
         _abilities.AddChild(ability.AbilityControllerScene.Instantiate());

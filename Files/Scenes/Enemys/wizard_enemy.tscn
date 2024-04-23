@@ -125,10 +125,11 @@ scale = Vector2(1.00527, 1)
 collision_layer = 8
 collision_mask = 9
 script = ExtResource("1_wbmlk")
-MaxHealth = 2
+MaxHealth = 3
+Speed = 50
 Acceleration = 20.0
 texture2D = ExtResource("1_f4grl")
-Weight = 90
+Weight = 20
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
