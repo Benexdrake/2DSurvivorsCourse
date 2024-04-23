@@ -13,7 +13,7 @@ public partial class MainMenu : CanvasLayer
 
     private void HandlePlayButtonPressed()
     {
-        GetTree().ChangeSceneToFile(GameConstants.MAIN_SCENE);
+        GetTree().ChangeSceneToFile(GameConstants.CHARACTER_MENU_SCENE);
     }
 
     private void HandleOptionsButtonPressed()

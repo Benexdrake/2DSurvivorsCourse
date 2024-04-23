@@ -55,11 +55,7 @@ public partial class CharacterCard : PanelContainer
         }
         await ToSignal(_animationPlayer, "animation_finished");
         
-        GetTree().ChangeSceneToFile(GameConstants.MAIN_SCENE);
-        
         EmitSignal(SignalName.StartGameWithCharacter, _atk, _speed, _hp, _texture);
-
-        QueueFree();
     }
 
     public async void PlayIn(float delay = 0)

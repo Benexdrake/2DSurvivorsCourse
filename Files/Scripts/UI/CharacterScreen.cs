@@ -17,13 +17,13 @@ public partial class CharacterScreen : CanvasLayer
 
     private void HandleStartGameWithCharacter(int atk, int speed, int hp, Texture2D texture)
     {
-        var entitiesLayer = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_ENTITIES_LAYER);
-		entitiesLayer.AddChild(_player.Instantiate());
+        GetTree().Paused = false;
+        PlayerStats.attack = atk;
+        PlayerStats.hp = hp;
+        PlayerStats.speed = speed;
+        PlayerStats.texture = texture;
 
-        // var player = GetTree().GetFirstNodeInGroup(GameConstants.PLAYER) as Player;
-        // player.SetCharacter(atk,speed,hp,texture);
-        // GetTree().Paused = false;
-        // QueueFree();
+        GetTree().ChangeSceneToFile(GameConstants.MAIN_SCENE);
     }
 
 }

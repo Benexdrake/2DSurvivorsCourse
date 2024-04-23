@@ -5,9 +5,9 @@ using System.Collections.Generic;
 public partial class Player : CharacterBody2D
 {
     
-    public int Attack { get; set; } = 1;
-    public int HP { get; set; } = 15;
-    public int Speed { get; set; } = 100;
+    public int Attack { get; set; } = PlayerStats.attack;
+    public int HP { get; set; } = PlayerStats.hp;
+    public int Speed { get; set; } = PlayerStats.speed;
     [Export] public int Acceleration { get; private set; } = 50;
     [Export] private PackedScene _swordAbility;
     [Export] private SwordAbilityController _swordAbilityController;
@@ -27,8 +27,8 @@ public partial class Player : CharacterBody2D
     private Area2D _collisionArea;
     public override void _Ready()
     {
-    
-
+        _sprite2D = GetNode<Sprite2D>("Visuals/Sprite2D");
+        _sprite2D.Texture = PlayerStats.texture;
 
         _collisionArea = GetNode<Area2D>("CollisionArea2D");
         _damageIntervalTimer = GetNode<Timer>("DamageIntervalTimer");
@@ -36,7 +36,7 @@ public partial class Player : CharacterBody2D
         _healthBar = GetNode<ProgressBar>("HealthBar");
         _abilities = GetNode<Node>("Abilities");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        _sprite2D = GetNode<Sprite2D>("Visuals/Sprite2D");
+        
         _velocityComponent = GetNode<VelocityComponent>("VelocityComponent");
 
 
