@@ -4,8 +4,11 @@ using System.Collections.Generic;
 
 public partial class Player : CharacterBody2D
 {
-    [Export(PropertyHint.Range,"0,200,0.5")] public int Speed { get; private set; } = 100;
-    [Export(PropertyHint.Range,"0,200,0.5")] public int Acceleration { get; private set; } = 50;
+    
+    public int Attack { get; set; } = 1;
+    public int HP { get; set; } = 15;
+    public int Speed { get; set; } = 100;
+    [Export] public int Acceleration { get; private set; } = 50;
     [Export] private PackedScene _swordAbility;
     [Export] private SwordAbilityController _swordAbilityController;
     public HealthComponent _healthComponent {get; private set;}
@@ -24,6 +27,9 @@ public partial class Player : CharacterBody2D
     private Area2D _collisionArea;
     public override void _Ready()
     {
+    
+
+
         _collisionArea = GetNode<Area2D>("CollisionArea2D");
         _damageIntervalTimer = GetNode<Timer>("DamageIntervalTimer");
         _healthComponent = GetNode<HealthComponent>("HealthComponent");
@@ -32,6 +38,8 @@ public partial class Player : CharacterBody2D
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _sprite2D = GetNode<Sprite2D>("Visuals/Sprite2D");
         _velocityComponent = GetNode<VelocityComponent>("VelocityComponent");
+
+
         _swordAbilityControllerTimer = _swordAbilityController.Timer;
         _collisionArea.BodyEntered += OnCollisionAreaEntered;
         _collisionArea.BodyExited += OnCollisionAreaExited;
@@ -120,5 +128,13 @@ public partial class Player : CharacterBody2D
 
         _healthComponent.Damage(1);
         _damageIntervalTimer.Start();
+    }
+
+    public void SetCharacter(int atk, int speed, int hp, Texture2D texture)
+    {
+        _sprite2D.Texture = texture;
+        Attack = atk;
+        Speed = speed;
+        HP = hp;
     }
 }

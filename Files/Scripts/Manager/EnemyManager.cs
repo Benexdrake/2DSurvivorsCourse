@@ -39,14 +39,12 @@ public partial class EnemyManager : Node
 
 		if(arenaDifficulty == 10)
 		{
-			GD.Print("Enemy Wizard");
 			var enemy = _wizardEnemy.Instantiate() as Enemy;
 			_enemyTable.Add(_wizardEnemy, enemy.Weight);
 			enemy.QueueFree();
 		}
 		else if(arenaDifficulty == 20)
 		{
-			GD.Print("Enemy Rat 2");
 			var enemy = _basicEnemy2.Instantiate() as Enemy;
 			_enemyTable.Add(_basicEnemy2, enemy.Weight);
 			enemy.QueueFree();

@@ -11,11 +11,16 @@ public partial class SwordAbilityController : Node
 
 	[Export] public Timer Timer { get; set; }
 
-	private int _baseDmg = GameConstants.SKILL_SWORD_DMG;
+	public int BaseAttack { get; set; }
 
 	
 	public override void _Ready()
 	{
+		if(Owner is Player)
+        {
+            var player = Owner as Player;
+			BaseAttack = player.Attack;
+        }
 		GameEvents.AbilityUpgradeAdded += HandelAbilityUpgradeAdded;
 	}
 
@@ -29,7 +34,7 @@ public partial class SwordAbilityController : Node
 
 		foregroundLayer.AddChild(swordAbilityInstance);
 
-		swordAbilityInstance.HitboxComponent.Damage = _baseDmg;
+		swordAbilityInstance.HitboxComponent.Damage = BaseAttack;
 
 		swordAbilityInstance.GlobalPosition = mousePosition;
 		swordAbilityInstance.GlobalPosition += Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau)) * 4;
@@ -44,6 +49,6 @@ public partial class SwordAbilityController : Node
 			Timer.WaitTime *= 1- (swordRateAbility.Quantity * .1);
 		}
 		else if(upgrade.Id.Equals(GameConstants.ABILITY_SWORD_DMG))
-            _baseDmg++;
+            BaseAttack++;
     }
 }

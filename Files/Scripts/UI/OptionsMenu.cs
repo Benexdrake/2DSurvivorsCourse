@@ -58,9 +58,9 @@ public partial class OptionsMenu : CanvasLayer
 
     private void UpdateDisplay()
     {
-        _windowButton.Text = "Windowed";
+        _windowButton.Text = "Fullscreen";
         if(DisplayServer.WindowGetMode() == DisplayServer.WindowMode.Fullscreen)
-            _windowButton.Text = "Fullscreen";
+            _windowButton.Text = "Windowed";
         _sfxSlider.Value = GetBusVolumePercent("sfx");
         _musicSlider.Value = GetBusVolumePercent("music");
     }

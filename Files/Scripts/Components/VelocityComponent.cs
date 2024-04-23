@@ -13,6 +13,11 @@ public partial class VelocityComponent : Node
 
     public override void _Ready()
     {
+        if(Owner is Player)
+        {
+            var player = Owner as Player;
+            MaxSpeed = player.Speed;
+        }
         _sprite2D = Owner.GetNode<Sprite2D>("Visuals/Sprite2D");
 
         _flip = !_sprite2D.FlipH;

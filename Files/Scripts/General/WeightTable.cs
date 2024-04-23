@@ -20,7 +20,6 @@ public class WeightTable
         foreach (var item in list)
         {
             iterationSum += item.Item2;
-            GD.Print(item.Item2);
             if(choosenWeight <= iterationSum)
                 return item.Item1;
         }
