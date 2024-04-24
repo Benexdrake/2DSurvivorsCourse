@@ -1,0 +1,8 @@
+[gd_scene load_steps=3 format=3 uid="uid://brs3r68pypu6m"]
+
+[ext_resource type="Script" path="res://Files/Scripts/Meta/MetaProgression.cs" id="1_w0p1j"]
+[ext_resource type="Resource" uid="uid://ccrnto45fetos" path="res://Files/Resources/MetaUpgrades/experience_gain.tres" id="2_qwfpk"]
+
+[node name="MetaProgression" type="Node"]
+script = ExtResource("1_w0p1j")
+_metaUpgradeArray = Array[Resource]([ExtResource("2_qwfpk")])

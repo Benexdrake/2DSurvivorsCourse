@@ -31,6 +31,7 @@ public partial class ArenaTimeManager : Node
 		AddChild(victoryScreenInstance);
 		victoryScreenInstance.SetWin();
 		victoryScreenInstance.PlayJingle(false);
+		GetNode<MetaProgression>("MetaProgression").Save();
     }
 
 

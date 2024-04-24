@@ -4,10 +4,11 @@ using System;
 public partial class CharacterScreen : CanvasLayer
 {
     [Export] PackedScene _player;
+    private ScreenTransition _transition;
     public override void _Ready()
     {
+        _transition = GetTree().Root.GetNode<ScreenTransition>("ScreenTransition");
         var charCards = GetNode<HBoxContainer>("%CardContainer").GetChildren();
-        GD.Print(charCards);
         foreach (CharacterCard card in charCards)
         {
             card.StartGameWithCharacter += HandleStartGameWithCharacter;
@@ -18,12 +19,11 @@ public partial class CharacterScreen : CanvasLayer
     private void HandleStartGameWithCharacter(int atk, int speed, int hp, Texture2D texture)
     {
         GetTree().Paused = false;
-        PlayerStats.attack = atk;
-        PlayerStats.hp = hp;
-        PlayerStats.speed = speed;
-        PlayerStats.texture = texture;
+        GameStats.attack = atk;
+        GameStats.hp = hp;
+        GameStats.speed = speed;
+        GameStats.texture = texture;
 
-        GetTree().ChangeSceneToFile(GameConstants.MAIN_SCENE);
+        _transition.TransitionToScene(GameConstants.MAIN_SCENE);
     }
-
 }

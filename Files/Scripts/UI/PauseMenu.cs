@@ -6,11 +6,12 @@ public partial class PauseMenu : CanvasLayer
     private AnimationPlayer _animationPlayer;
     private PanelContainer _panelContainer;
     [Export] PackedScene _optionsMenu;
+    private ScreenTransition _transition;
 
     bool isClosing;
     public override void _Ready()
     {
-        GetTree().Paused = true;
+        _transition = GetTree().Root.GetNode<ScreenTransition>("ScreenTransition");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         _panelContainer = GetNode<PanelContainer>("%PanelContainer");
 
@@ -18,6 +19,7 @@ public partial class PauseMenu : CanvasLayer
         GetNode<Button>("%OptionsButton").Pressed += HandleOptionsButton;
         GetNode<Button>("%QuitToMenuButton").Pressed += HandleQuitToMenuButton;
         GetNode<Button>("%QuitGameButton").Pressed += HandleQuitGameButton;
+        GetTree().Paused = true;
 
         _animationPlayer.Play(GameConstants.ANIM_IN);
 
@@ -29,14 +31,16 @@ public partial class PauseMenu : CanvasLayer
         .SetEase(Tween.EaseType.Out). SetTrans(Tween.TransitionType.Back);
     }
 
-    private void HandleOptionsButton()
+    private async void HandleOptionsButton()
     {
+        _transition.Transition();
+        await ToSignal(_transition,"TransitionedHalfway");
         var optionsInstance = _optionsMenu.Instantiate() as OptionsMenu;
         AddChild(optionsInstance);
         optionsInstance.BackPressed += HandleOptionsButtonBackPressed;
     }
 
-    private void HandleOptionsButtonBackPressed(Node node)
+    private async void HandleOptionsButtonBackPressed(Node node)
     {
         node.QueueFree();
     }
@@ -44,7 +48,7 @@ public partial class PauseMenu : CanvasLayer
     private void HandleQuitToMenuButton()
     {
         GetTree().Paused = false;
-        GetTree().ChangeSceneToFile(GameConstants.MAIN_MENU_SCENE);
+        _transition.TransitionToScene(GameConstants.MAIN_MENU_SCENE);
     }
 
 

@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class VialDropComponent : Node
 {
@@ -16,6 +17,12 @@ public partial class VialDropComponent : Node
 
     private void HandleDied()
     {
+        var meta = GetTree().Root.GetNode<MetaProgression>("MetaProgression");
+        
+        var quantity = meta.GetUpgradeCount(GameConstants.META_VIAL_DROP);
+        if(quantity >0)
+            _dropPercent += .1f;
+
         if(GD.Randf() > _dropPercent)
             return;
 

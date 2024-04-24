@@ -124,6 +124,7 @@ autoplay = "walk"
 MaxHealth = 1
 
 [node name="VialDropComponent" parent="." instance=ExtResource("4_5kfx5")]
+_dropPercent = 0.6
 
 [node name="VelocityComponent" parent="." instance=ExtResource("5_lsv8j")]
 

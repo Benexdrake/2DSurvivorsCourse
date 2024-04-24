@@ -51,6 +51,7 @@ public partial class OptionsMenu : CanvasLayer
         }
         else
         {
+            DisplayServer.WindowSetFlag(DisplayServer.WindowFlags.Borderless, false);
             DisplayServer.WindowSetMode(DisplayServer.WindowMode.Windowed);
         }
         UpdateDisplay();

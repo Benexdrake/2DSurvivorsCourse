@@ -1,11 +1,11 @@
 [gd_scene load_steps=19 format=3 uid="uid://befcdhn6k04a5"]
 
 [ext_resource type="Script" path="res://Files/Scripts/Player/Player.cs" id="1_lh0e7"]
-[ext_resource type="PackedScene" uid="uid://c83jg54lsqnfg" path="res://Files/Scenes/Abilities/Sword/sword_ability.tscn" id="2_3jxmm"]
 [ext_resource type="PackedScene" uid="uid://c2nl0p887q26k" path="res://Files/Scenes/Abilities/Sword/sword_ability_controller.tscn" id="2_8nn6v"]
 [ext_resource type="PackedScene" uid="uid://5tnb3musw5uu" path="res://Files/Scenes/Components/health_component.tscn" id="2_aalus"]
 [ext_resource type="PackedScene" uid="uid://d4av27utniru1" path="res://Files/Scenes/Components/velocity_component.tscn" id="4_vnehm"]
 [ext_resource type="Texture2D" uid="uid://cbehqqyciheuv" path="res://Files/Assets/Player/Player1.png" id="5_kerm7"]
+[ext_resource type="PackedScene" uid="uid://bdyrydvmlmfnh" path="res://Files/Scenes/Abilities/Hammer/hammer_ability_controller.tscn" id="6_7ns4j"]
 [ext_resource type="AudioStream" uid="uid://bnrgil1rmfwjp" path="res://Files/Assets/SFX/impactMining_000.ogg" id="7_tiqil"]
 [ext_resource type="AudioStream" uid="uid://cd7j8q6av4teo" path="res://Files/Assets/SFX/impactMining_001.ogg" id="8_rude7"]
 [ext_resource type="AudioStream" uid="uid://00rqj2fivrxj" path="res://Files/Assets/SFX/impactMining_002.ogg" id="9_o7uc5"]
@@ -120,12 +120,12 @@ stream_3/weight = 1.0
 stream_4/stream = ExtResource("11_13lnk")
 stream_4/weight = 1.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_swordAbilityController") groups=["Player"]]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("_swordAbilityController", "_hammerAbilityController") groups=["Player"]]
 collision_layer = 0
 motion_mode = 1
 script = ExtResource("1_lh0e7")
-_swordAbility = ExtResource("2_3jxmm")
 _swordAbilityController = NodePath("Abilities/SwordAbilityController")
+_hammerAbilityController = NodePath("Abilities/HammerAbilityController")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -140,6 +140,8 @@ MaxHealth = 10
 [node name="Abilities" type="Node" parent="."]
 
 [node name="SwordAbilityController" parent="Abilities" instance=ExtResource("2_8nn6v")]
+
+[node name="HammerAbilityController" parent="Abilities" instance=ExtResource("6_7ns4j")]
 
 [node name="DamageIntervalTimer" type="Timer" parent="."]
 wait_time = 0.5

@@ -5,17 +5,16 @@ using System.Collections.Generic;
 public partial class Player : CharacterBody2D
 {
     
-    public int Attack { get; set; } = PlayerStats.attack;
-    public int HP { get; set; } = PlayerStats.hp;
-    public int Speed { get; set; } = PlayerStats.speed;
+    public int Attack { get; set; } = GameStats.attack;
+    public int HP { get; set; } = GameStats.hp;
+    public int Speed { get; set; } = GameStats.speed;
     [Export] public int Acceleration { get; private set; } = 50;
-    [Export] private PackedScene _swordAbility;
     [Export] private SwordAbilityController _swordAbilityController;
+    [Export] private HammerAbilityController _hammerAbilityController;
     public HealthComponent _healthComponent {get; private set;}
 
     private ProgressBar _healthBar;
     private Timer _damageIntervalTimer;
-    private Timer _swordAbilityControllerTimer;
     private Node _abilities;
     private AnimationPlayer _animationPlayer;
     private Sprite2D _sprite2D;
@@ -28,19 +27,14 @@ public partial class Player : CharacterBody2D
     public override void _Ready()
     {
         _sprite2D = GetNode<Sprite2D>("Visuals/Sprite2D");
-        _sprite2D.Texture = PlayerStats.texture;
-
+        _sprite2D.Texture = GameStats.texture;
         _collisionArea = GetNode<Area2D>("CollisionArea2D");
         _damageIntervalTimer = GetNode<Timer>("DamageIntervalTimer");
         _healthComponent = GetNode<HealthComponent>("HealthComponent");
         _healthBar = GetNode<ProgressBar>("HealthBar");
         _abilities = GetNode<Node>("Abilities");
         _animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-        
         _velocityComponent = GetNode<VelocityComponent>("VelocityComponent");
-
-
-        _swordAbilityControllerTimer = _swordAbilityController.Timer;
         _collisionArea.BodyEntered += OnCollisionAreaEntered;
         _collisionArea.BodyExited += OnCollisionAreaExited;
         _damageIntervalTimer.Timeout += () => CheckDealDamage();
@@ -82,10 +76,8 @@ public partial class Player : CharacterBody2D
 
         if(Input.IsActionJustPressed(GameConstants.INPUT_LEFT_CLICK))
 		{
-			if(_swordAbilityControllerTimer.IsStopped())
-			{
-				_swordAbilityController.Attack();
-			}
+			_swordAbilityController.Attack();
+			//_hammerAbilityController.Attack(GlobalPosition);
 		}
     }
 

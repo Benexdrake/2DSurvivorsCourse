@@ -34,6 +34,7 @@ public class GameConstants
     public const string GROUP_ENTITIES_LAYER = "entities_layer";
     public const string GROUP_FOREGROUND_LAYER = "foreground_layer";
     public const string GROUP_UPGRADE_CARD = "upgrade_card";
+    public const string GROUP_META_CARD = "meta_card";
 
     // Abilitys
     public const string ABILITY_PLAYER_SPEED = "player_speed";
@@ -50,6 +51,7 @@ public class GameConstants
     public const string MAIN_MENU_SCENE = "res://Files/Scenes/UI/main_menu.tscn";
     public const string OPTIONS_MENU_SCENE = "res://Files/Scenes/UI/options_menu.tscn";
     public const string CHARACTER_MENU_SCENE = "res://Files/Scenes/UI/character_screen.tscn";
+    public const string META_MENU_SCENE = "res://Files/Scenes/UI/meta_menu.tscn";
 
     // Label
     public const string DEFEAT_TITLE_LABEL = "Defeat";
@@ -58,9 +60,16 @@ public class GameConstants
     public const string WIN_DESCRIPTION_LABEL = "You Won!";
 
     // Gameplay
-    public const float DIFFICULTY_INTERVAL = 5;
+    public const float DIFFICULTY_INTERVAL = 1;
+    public const float DIFFICULTY_ENEMY_SPAWN_TIME = 1;
     public const int SKILL_SWORD_DMG = 1;
     public const int SKILL_AXE_DMG = 1;
     public const int SKILL_AXE_RADIUS = 100;
+
+    // Save File
+    public const string SAVE_FILE_PATH = "user://game.save";
+
+    // Meta Upgrades
+    public const string META_VIAL_DROP = "experience_gain";
 
 }

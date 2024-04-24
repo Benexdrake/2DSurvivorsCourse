@@ -4,9 +4,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-public partial class SwordAbilityController : Node
+public partial class HammerAbilityController : Node
 {
-	[Export] public PackedScene SwordAbility { get; private set; }
+	[Export] public PackedScene HammerAbility { get; private set; }
 	[Export] public int Range { get; private set; } = 150;
 
 	[Export] public Timer Timer { get; set; }
@@ -24,22 +24,25 @@ public partial class SwordAbilityController : Node
 		GameEvents.AbilityUpgradeAdded += HandelAbilityUpgradeAdded;
 	}
 
-	public void Attack()
+	public void Attack(Vector2 playerPosition)
 	{
 		if(!Timer.IsStopped())
 			return;
+
 		var mousePosition = GetViewport().GetCamera2D().GetLocalMousePosition();
 
-		var swordAbilityInstance = SwordAbility.Instantiate() as SwordAbility;
+		var hammerAbilityInstance = HammerAbility.Instantiate() as HammerAbility;
 
 		var foregroundLayer = GetTree().GetFirstNodeInGroup(GameConstants.GROUP_FOREGROUND_LAYER);
 
-		foregroundLayer.AddChild(swordAbilityInstance);
+		foregroundLayer.AddChild(hammerAbilityInstance);
 
-		swordAbilityInstance.HitboxComponent.Damage = BaseAttack;
+		hammerAbilityInstance.HitboxComponent.Damage = BaseAttack;
 
-		swordAbilityInstance.GlobalPosition = mousePosition;
-		swordAbilityInstance.GlobalPosition += Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau)) * 4;
+
+		hammerAbilityInstance.GlobalPosition = playerPosition;
+		//hammerAbilityInstance.GlobalPosition += Vector2.Right.Rotated((float)GD.RandRange(0, Mathf.Tau)) * 4;
+		//hammerAbilityInstance.Rotate();
 		Timer.Start();
 	}
 

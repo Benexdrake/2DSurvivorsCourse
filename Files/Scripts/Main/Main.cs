@@ -29,6 +29,7 @@ public partial class Main : Node
     {
         var endScreenInstance = _endScreenScene.Instantiate() as EndScreen;
         AddChild(endScreenInstance);
+		GetTree().Root.GetNode<MetaProgression>("MetaProgression").Save();
         endScreenInstance.SetDefeat();
     }
 }
